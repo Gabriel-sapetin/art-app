@@ -1,0 +1,245 @@
+/* ========================================================
+   App-Level & Layout Styles
+   ======================================================== */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+main {
+  flex: 1;
+}
+
+/* ── Floating Tactile Sketchbook Quick Button ── */
+.sketchbook-floating-pill-wrap {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+}
+
+.sketchbook-floating-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  background: var(--color-brown-dark);
+  color: var(--color-ivory);
+  border: 1.5px solid var(--color-accent-gold);
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(42, 36, 32, 0.35);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  font-family: var(--font-body);
+}
+
+.sketchbook-floating-pill:hover {
+  background: var(--color-ink);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(42, 36, 32, 0.45);
+}
+
+.sketchbook-floating-pill__icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.sketchbook-floating-pill__label {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ── Sketchbook Banner Strip ── */
+.sketchbook-banner-strip {
+  background: var(--color-cream);
+  border-top: var(--border-thin);
+  border-bottom: var(--border-thin);
+  padding: var(--space-xl) 0;
+}
+
+.sketchbook-banner-strip__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xl);
+}
+
+.sketchbook-banner-strip__text h3 {
+  font-size: 1.5rem;
+  margin: 4px 0 6px;
+  color: var(--color-ink);
+}
+
+.sketchbook-banner-strip__text p {
+  font-size: 0.95rem;
+  color: var(--color-brown-dark);
+  margin: 0;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+.sketchbook-banner-strip__btn {
+  white-space: nowrap;
+  padding: 12px 26px;
+  font-size: 0.92rem;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ── Back to Top Button ── */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-ivory);
+  border: var(--border-thin);
+  color: var(--color-brown-dark);
+  box-shadow: var(--shadow-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.2s ease;
+}
+
+.back-to-top:hover {
+  background: var(--color-brown-dark);
+  color: var(--color-ivory);
+  transform: translateY(-2px);
+}
+
+/* ── Editorial Footer ── */
+.footer {
+  background: #201a16;
+  color: var(--color-parchment);
+  padding-top: var(--space-3xl);
+  border-top: 2px solid rgba(196, 168, 130, 0.2);
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-3xl);
+  border-bottom: 1px solid rgba(196, 168, 130, 0.12);
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.footer__logo .navbar__logo-icon {
+  background: transparent;
+  color: var(--color-parchment);
+  border-color: var(--color-brown-light);
+}
+
+.footer__logo-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-parchment);
+  display: block;
+}
+
+.footer__logo-sub {
+  font-size: 0.85rem;
+  color: var(--color-brown-light);
+  display: block;
+}
+
+.footer__desc {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(245, 240, 232, 0.7);
+  margin-bottom: var(--space-md);
+  max-width: 420px;
+}
+
+.footer__group {
+  color: var(--color-accent-gold);
+}
+
+.footer__col h4 {
+  color: var(--color-brown-light);
+  margin-bottom: var(--space-md);
+}
+
+.footer__links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer__links a {
+  color: rgba(245, 240, 232, 0.7);
+  font-size: 0.85rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.footer__links a:hover {
+  color: var(--color-accent-gold);
+  transform: translateX(3px);
+}
+
+.footer__bottom {
+  padding: var(--space-lg) 0;
+  background: #171310;
+}
+
+.footer__bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.footer__copy {
+  font-size: 0.75rem;
+  color: rgba(245, 240, 232, 0.5);
+}
+
+/* Responsive Footer */
+@media (max-width: 900px) {
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sketchbook-banner-strip__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+  }
+  .footer__bottom-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .sketchbook-floating-pill-wrap {
+    bottom: 16px;
+    right: 16px;
+  }
+  .sketchbook-floating-pill {
+    padding: 10px 16px;
+  }
+  .sketchbook-floating-pill__label {
+    font-size: 0.85rem;
+  }
+}

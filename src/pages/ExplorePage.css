@@ -1,0 +1,231 @@
+.explore {
+  background: linear-gradient(180deg, var(--color-parchment) 0%, var(--color-cream) 100%);
+}
+
+.explore__tabs {
+  display: flex;
+  gap: var(--space-xs);
+  border-bottom: 2px solid rgba(92, 74, 58, 0.12);
+  margin-bottom: var(--space-2xl);
+  overflow-x: auto;
+  padding-bottom: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.explore__tab {
+  flex-shrink: 0;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-brown);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: var(--font-body);
+}
+.explore__tab:hover {
+  color: var(--color-brown-dark);
+  background: rgba(92, 74, 58, 0.04);
+}
+.explore__tab--active {
+  color: var(--color-brown-dark);
+  border-bottom-color: var(--color-brown-dark);
+  font-weight: 600;
+}
+
+.explore__panel {
+  min-height: 400px;
+}
+
+.explore__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.explore__text-block {
+  max-width: 800px;
+}
+.explore__text-block h3 {
+  margin-bottom: var(--space-md);
+  font-size: 1.6rem;
+}
+.explore__text-block p {
+  line-height: 1.85;
+  color: var(--color-charcoal);
+}
+
+.explore__sub-heading {
+  margin-top: var(--space-lg);
+  font-size: 1.3rem;
+  color: var(--color-brown-dark);
+}
+
+.explore__grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+.explore__grid-three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.explore__list {
+  list-style: none;
+  padding: 0;
+}
+.explore__list li {
+  padding: var(--space-sm) 0;
+  border-bottom: var(--border-thin);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.explore__list li:last-child { border-bottom: none; }
+
+.explore__term-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 2px;
+  margin-bottom: var(--space-sm);
+}
+.explore__term-card h4 {
+  margin-bottom: var(--space-xs);
+  font-size: 1rem;
+}
+.explore__term-card p {
+  font-size: 0.88rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Tools grid */
+.explore__tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+.explore__tool-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-md);
+  align-items: start;
+}
+.explore__tool-img-wrap {
+  position: relative;
+}
+.explore__tool-img-wrap img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.explore__tool-img-wrap .plate-label {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: rgba(245, 240, 232, 0.9);
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-size: 0.65rem;
+}
+.explore__tool-info h4 {
+  margin-bottom: var(--space-xs);
+  font-size: 0.95rem;
+}
+.explore__tool-info p {
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Medieval grid */
+.explore__medieval-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-lg);
+}
+.explore__medieval-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 2px;
+  margin-bottom: var(--space-sm);
+}
+.explore__medieval-info h4 {
+  margin-bottom: var(--space-xs);
+  font-size: 0.95rem;
+}
+.explore__medieval-info p {
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Vessels */
+.explore__vessels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+.explore__vessel-card {
+  text-align: center;
+}
+.explore__vessel-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: var(--space-sm);
+  background: var(--color-cream);
+  border-radius: 2px;
+  padding: var(--space-sm);
+}
+.explore__vessel-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: var(--space-xs);
+}
+.explore__vessel-card p {
+  font-size: 0.82rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Callout */
+.explore__callout {
+  background: var(--color-cream);
+  border-left: 3px solid var(--color-accent-gold);
+}
+.explore__callout .annotation {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-size: 1.1rem;
+}
+.explore__callout-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 2px;
+  margin: var(--space-md) 0;
+  border: var(--border-thin);
+}
+
+@media (max-width: 768px) {
+  .explore__grid-two,
+  .explore__grid-three,
+  .explore__tools-grid,
+  .explore__vessels-grid {
+    grid-template-columns: 1fr;
+  }
+  .explore__tool-card {
+    grid-template-columns: 1fr;
+  }
+  .explore__tool-img-wrap img {
+    height: 180px;
+  }
+}

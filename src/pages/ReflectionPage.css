@@ -1,0 +1,106 @@
+/* ========================================================
+   Reflection Page Styles
+   ======================================================== */
+
+.reflection {
+  background: linear-gradient(180deg, var(--color-parchment) 0%, var(--color-cream) 100%);
+}
+
+.reflection__quote-card {
+  max-width: 760px;
+  margin: 0 auto var(--space-2xl);
+  text-align: center;
+  padding: var(--space-2xl) var(--space-xl);
+  background: var(--color-ivory);
+  border-left: 4px solid var(--color-accent-gold);
+  border-right: 4px solid var(--color-accent-gold);
+  position: relative;
+}
+
+.reflection__quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-style: italic;
+  color: var(--color-ink);
+  line-height: 1.5;
+  margin-bottom: var(--space-md);
+}
+
+.reflection__quote-author {
+  font-size: 1.15rem;
+  color: var(--color-brown-dark);
+}
+
+.reflection__essay-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.reflection__card {
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.reflection__card-number {
+  margin-bottom: var(--space-xs);
+  color: var(--color-brown);
+}
+
+.reflection__card h3 {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-brown-dark);
+  line-height: 1.35;
+}
+
+.reflection__card p {
+  font-size: 0.94rem;
+  line-height: 1.85;
+  color: var(--color-charcoal);
+  margin-bottom: var(--space-md);
+}
+
+.reflection__card p:last-child {
+  margin-bottom: 0;
+}
+
+.reflection__synthesis {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
+  background: var(--color-ivory);
+  border: var(--border-medium);
+  box-shadow: var(--shadow-medium);
+  border-top: 3px solid var(--color-brown-dark);
+}
+
+.reflection__synthesis-header {
+  margin-bottom: var(--space-md);
+}
+
+.reflection__synthesis-header h4 {
+  font-size: 1.35rem;
+  margin-top: 4px;
+  color: var(--color-ink);
+}
+
+.reflection__synthesis p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--color-charcoal);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .reflection__essay-grid {
+    grid-template-columns: 1fr;
+  }
+  .reflection__card,
+  .reflection__synthesis {
+    padding: var(--space-lg);
+  }
+}

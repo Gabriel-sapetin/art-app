@@ -1,0 +1,240 @@
+/* ========================================
+   Atelier Occidental — Global Styles
+   Western Art History Interactive Sketchbook
+   ======================================== */
+
+:root {
+  /* Color palette — parchment, warm tones, muted historical accents */
+  --color-parchment: #f5f0e8;
+  --color-ivory: #faf7f0;
+  --color-cream: #f0ead6;
+  --color-warm-beige: #e8dcc8;
+  --color-brown-light: #c4a882;
+  --color-brown: #8b7355;
+  --color-brown-dark: #5c4a3a;
+  --color-charcoal: #3a3330;
+  --color-ink: #2a2420;
+  --color-accent-red: #8b4513;
+  --color-accent-gold: #c9a84c;
+  --color-accent-blue: #4a6670;
+  --color-accent-green: #5a7a60;
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-handwritten: 'Caveat', cursive;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Borders and shadows */
+  --border-thin: 1px solid rgba(92, 74, 58, 0.2);
+  --border-medium: 2px solid rgba(92, 74, 58, 0.15);
+  --shadow-soft: 0 2px 8px rgba(42, 36, 32, 0.08);
+  --shadow-medium: 0 4px 16px rgba(42, 36, 32, 0.12);
+  --shadow-lifted: 0 8px 32px rgba(42, 36, 32, 0.16);
+
+  /* Layout */
+  --max-width: 1200px;
+  --nav-height: 64px;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-charcoal);
+  background-color: var(--color-parchment);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Paper texture background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(200, 180, 150, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(180, 160, 130, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(190, 170, 140, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-ink);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: 600; }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 600; }
+h4 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; }
+
+p { margin-bottom: var(--space-md); }
+
+a {
+  color: var(--color-brown-dark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover { color: var(--color-accent-red); }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  background: none;
+}
+
+/* Utility classes */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.section {
+  padding: var(--space-3xl) 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: var(--space-sm);
+  position: relative;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-family: var(--font-handwritten);
+  font-size: 1.2rem;
+  color: var(--color-brown);
+  margin-bottom: var(--space-2xl);
+}
+
+.section-divider {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-brown), transparent);
+  margin: var(--space-lg) auto var(--space-xl);
+}
+
+/* Handwritten annotation style */
+.annotation {
+  font-family: var(--font-handwritten);
+  color: var(--color-brown);
+  font-size: 1.1rem;
+}
+
+/* Paper card */
+.paper-card {
+  background: var(--color-ivory);
+  border: var(--border-thin);
+  border-radius: 4px;
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.paper-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+/* Museum caption */
+.museum-caption {
+  font-size: 0.85rem;
+  color: var(--color-brown);
+  border-top: var(--border-thin);
+  padding-top: var(--space-sm);
+  margin-top: var(--space-md);
+  font-style: italic;
+}
+
+/* Plate number label */
+.plate-label {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-brown);
+}
+
+/* Scroll-based fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
+  .section {
+    padding: var(--space-2xl) 0;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-cream); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-brown-light);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-brown); }
+
