@@ -643,7 +643,7 @@
   transform-origin: bottom center;
   /* Collapsed state */
   transform: translateZ(4px) rotateX(65deg) scale(0.85);
-  opacity: 0.2;
+  opacity: 0.95;
   transition:
     transform 0.9s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 0.45s 0.12s ease,
@@ -1702,8 +1702,8 @@
 }
 
 @keyframes coverRevealPages {
-  0%, 40% { opacity: 0; }
-  65%, 100% { opacity: 1; }
+  0%, 72% { opacity: 0; }
+  95%, 100% { opacity: 1; }
 }
 
 @keyframes coverRevealControls {

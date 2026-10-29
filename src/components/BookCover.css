@@ -353,7 +353,13 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: translateZ(0.5px);
-  background: linear-gradient(135deg, #f6edd9 0%, #efe3cc 40%, #f8f1e2 100%);
+  background:
+    linear-gradient(135deg, #f7efe0 0%, #efe4ce 40%, #f9f2e3 100%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px 14px,
+      rgba(155, 130, 95, 0.08) 14px 15px
+    );
   border: 1px solid rgba(155, 130, 95, 0.28);
   box-shadow:
     inset 0 0 20px rgba(120, 90, 55, 0.08),
@@ -367,11 +373,18 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: rotateY(180deg) translateZ(0.5px);
-  background: linear-gradient(225deg, #f2e8d2 0%, #ebe0c9 40%, #f5eedf 100%);
+  background:
+    linear-gradient(225deg, #f3e9d4 0%, #ece1ca 40%, #f6eedf 100%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px 14px,
+      rgba(155, 130, 95, 0.07) 14px 15px
+    );
   border: 1px solid rgba(155, 130, 95, 0.22);
   box-shadow:
-    inset 0 0 18px rgba(120, 90, 55, 0.06),
-    inset 2px 0 6px rgba(120, 90, 55, 0.05);
+    inset 0 0 18px rgba(120, 90, 55, 0.07),
+    inset 2px 0 6px rgba(120, 90, 55, 0.05),
+    -8px 4px 22px rgba(30, 16, 8, 0.22);
 }
 
 .book-cover__inner-leaf--1 .book-cover__leaf-front {
@@ -414,37 +427,59 @@
 }
 
 .book-cover-stage--opening .book-cover__inner-leaf--1 {
-  animation: leafFlipCascade 900ms cubic-bezier(0.22, 0.68, 0.35, 1) 400ms both;
+  animation: leafFlipCascade1 1100ms cubic-bezier(0.24, 0.48, 0.35, 1) 360ms forwards;
 }
 .book-cover-stage--opening .book-cover__inner-leaf--2 {
-  animation: leafFlipCascade 800ms cubic-bezier(0.18, 0.72, 0.32, 1) 650ms both;
+  animation: leafFlipCascade2 1100ms cubic-bezier(0.24, 0.48, 0.35, 1) 600ms forwards;
 }
 .book-cover-stage--opening .book-cover__inner-leaf--3 {
-  animation: leafFlipCascade 700ms cubic-bezier(0.15, 0.76, 0.30, 1) 850ms both;
+  animation: leafFlipCascade3 1100ms cubic-bezier(0.24, 0.48, 0.35, 1) 840ms forwards;
 }
 .book-cover-stage--opening .book-cover__inner-leaf--4 {
-  animation: leafFlipCascade 600ms cubic-bezier(0.12, 0.80, 0.28, 1) 1050ms both;
+  animation: leafFlipCascade4 1050ms cubic-bezier(0.24, 0.48, 0.35, 1) 1080ms forwards;
 }
 
 @keyframes hardcoverSwing {
   0%   { transform: rotateY(0deg);    visibility: visible; }
-  10%  { transform: rotateY(-8deg);   visibility: visible; }
-  25%  { transform: rotateY(-28deg);  visibility: visible; }
-  55%  { transform: rotateY(-100deg); visibility: visible; }
-  80%  { transform: rotateY(-164deg); visibility: visible; }
+  10%  { transform: rotateY(-10deg);  visibility: visible; }
+  25%  { transform: rotateY(-32deg);  visibility: visible; }
+  55%  { transform: rotateY(-105deg); visibility: visible; }
+  80%  { transform: rotateY(-165deg); visibility: visible; }
   92%  { transform: rotateY(-178deg); visibility: visible; }
   97%  { transform: rotateY(-181deg); visibility: visible; }
-  99%  { transform: rotateY(-180deg); visibility: visible; }
-  100% { transform: rotateY(-180deg); visibility: hidden; }
+  100% { transform: rotateY(-180deg); visibility: visible; }
 }
 
-@keyframes leafFlipCascade {
-  0%   { transform: rotateY(0deg);    visibility: visible; }
-  40%  { transform: rotateY(-72deg);  visibility: visible; }
-  75%  { transform: rotateY(-162deg); visibility: visible; }
-  90%  { transform: rotateY(-183deg); visibility: visible; }
-  99%  { transform: rotateY(-180deg); visibility: visible; }
-  100% { transform: rotateY(-180deg); visibility: hidden; }
+@keyframes leafFlipCascade1 {
+  0%   { transform: rotateY(0deg) rotateZ(0deg); visibility: visible; }
+  35%  { transform: rotateY(-62deg) rotateZ(1.2deg); visibility: visible; }
+  70%  { transform: rotateY(-130deg) rotateZ(0.8deg); visibility: visible; }
+  92%  { transform: rotateY(-182deg) rotateZ(-0.2deg); visibility: visible; }
+  100% { transform: rotateY(-180deg) rotateZ(0deg); visibility: visible; }
+}
+
+@keyframes leafFlipCascade2 {
+  0%   { transform: rotateY(0deg) rotateZ(0deg); visibility: visible; }
+  35%  { transform: rotateY(-64deg) rotateZ(1deg); visibility: visible; }
+  70%  { transform: rotateY(-132deg) rotateZ(0.6deg); visibility: visible; }
+  92%  { transform: rotateY(-182deg) rotateZ(-0.2deg); visibility: visible; }
+  100% { transform: rotateY(-180deg) rotateZ(0deg); visibility: visible; }
+}
+
+@keyframes leafFlipCascade3 {
+  0%   { transform: rotateY(0deg) rotateZ(0deg); visibility: visible; }
+  35%  { transform: rotateY(-66deg) rotateZ(0.8deg); visibility: visible; }
+  70%  { transform: rotateY(-134deg) rotateZ(0.5deg); visibility: visible; }
+  92%  { transform: rotateY(-181deg) rotateZ(-0.1deg); visibility: visible; }
+  100% { transform: rotateY(-180deg) rotateZ(0deg); visibility: visible; }
+}
+
+@keyframes leafFlipCascade4 {
+  0%   { transform: rotateY(0deg) rotateZ(0deg); visibility: visible; }
+  35%  { transform: rotateY(-68deg) rotateZ(0.6deg); visibility: visible; }
+  70%  { transform: rotateY(-136deg) rotateZ(0.4deg); visibility: visible; }
+  92%  { transform: rotateY(-181deg) rotateZ(-0.1deg); visibility: visible; }
+  100% { transform: rotateY(-180deg) rotateZ(0deg); visibility: visible; }
 }
 
 @keyframes coverCastShadow {

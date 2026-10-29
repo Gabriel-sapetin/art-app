@@ -70,7 +70,7 @@ export default function HomePage({ isBookOpen = false, isOpening = false, onOpen
       <section id="home" className="home home--sole-cover">
         <div className="home__sole-cover-container">
           <TactileSketchbookModal
-            key="cover-opening-sketchbook"
+            key="main-tactile-sketchbook"
             inline
             initialArtworkId={1}
             showCover
@@ -89,7 +89,7 @@ export default function HomePage({ isBookOpen = false, isOpening = false, onOpen
       <div className="home__book-stage">
         <div className="home__open-book-wrap">
           <TactileSketchbookModal
-            key="open-sketchbook"
+            key="main-tactile-sketchbook"
             inline
             initialArtworkId={1}
             onCloseToCover={onCloseToCover}

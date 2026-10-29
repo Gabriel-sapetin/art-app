@@ -39,7 +39,7 @@ export default function App() {
       return;
     }
     setIsOpening(true);
-    const openingDuration = 2000;
+    const openingDuration = 2200;
     setTimeout(() => {
       setIsBookOpen(true);
       setIsOpening(false);
