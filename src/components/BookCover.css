@@ -1,0 +1,430 @@
+/* ================================================================
+   BookCover.css: Leather cover + multi-page cascade flip animation
+   The cover is mounted inside the sketchbook spread so its
+   hinge (left edge) aligns with the spine.
+   ================================================================ */
+
+.book-cover-stage {
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* ── The leather hardcover board ── */
+.book-cover {
+  position: absolute;
+  inset: 10px 13px 18px 50%;
+  z-index: 35;
+  transform: rotateY(0deg);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  border-radius: 3px 7px 7px 3px;
+  pointer-events: none;
+}
+
+/* Visible page-block edge behind the cover */
+.book-cover::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 4px -7px -5px 4px;
+  border-radius: 2px 6px 6px 2px;
+  background:
+    linear-gradient(90deg, rgba(96, 67, 38, 0.2), transparent 18%),
+    repeating-linear-gradient(
+      to bottom,
+      #f3ead8 0 1px,
+      #cdbb99 1.5px,
+      #faf5e9 2.5px,
+      #e5d7be 3px
+    );
+  box-shadow: 3px 6px 9px rgba(37, 24, 14, 0.24);
+  transform: translateZ(-3px);
+  backface-visibility: hidden;
+}
+
+/* Cast shadow on the desk */
+.book-cover__cast-shadow {
+  position: absolute;
+  z-index: 1;
+  inset: 14px 11px 8px 50%;
+  border-radius: 2px 8px 8px 2px;
+  background: rgba(35, 22, 12, 0.48);
+  filter: blur(15px);
+  opacity: 0;
+  transform: scaleX(0.86);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* ── Cover front face ── */
+.book-cover__face {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid rgba(35, 20, 10, 0.82);
+  border-radius: inherit;
+  background: #382214;
+  color: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.book-cover__face--front {
+  z-index: 2;
+  transform: translateZ(1px);
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.book-cover__face--front:focus-visible {
+  outline: 3px solid #d8b969;
+  outline-offset: 4px;
+}
+
+/* Cover inside (visible when flipped open) */
+.book-cover__inside {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(114, 82, 48, 0.22), transparent 18% 85%, rgba(107, 77, 46, 0.15)),
+    url('/assets/paper-grain.svg') repeat,
+    linear-gradient(135deg, #efe5d3, #e5d8c2 52%, #f3eadb);
+  background-size: auto, 160px 160px, auto;
+  box-shadow: inset 0 0 18px rgba(92, 65, 38, 0.16);
+  transform: rotateY(180deg) translateZ(1px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.book-cover__inside::after {
+  content: '';
+  position: absolute;
+  inset: 3.5%;
+  border: none;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* ── Cover texture and overlays ── */
+.book-cover__bg {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.book-cover__shadow-overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(13, 7, 4, 0.19), transparent 18% 74%, rgba(16, 8, 4, 0.19)),
+    linear-gradient(180deg, rgba(255, 231, 174, 0.05), transparent 22% 80%, rgba(14, 7, 3, 0.17));
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ── Gold-embossed text content on cover ── */
+.book-cover__content {
+  position: absolute;
+  z-index: 3;
+  inset: 24% 7% 13% 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(7px, 1.2vh, 13px);
+  box-sizing: border-box;
+  padding: 0 clamp(8px, 1.4vw, 16px);
+  color: #dfbd72;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 229, 166, 0.38), 0 -1px 1px rgba(51, 29, 12, 0.9), 0 2px 3px rgba(0, 0, 0, 0.75);
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.book-cover__edition,
+.book-cover__tagline,
+.book-cover__topic,
+.book-cover__academic-tag {
+  font-family: var(--font-serif, Georgia, serif);
+  text-transform: uppercase;
+}
+
+.book-cover__edition {
+  color: #c4a45e;
+  font-size: clamp(0.52rem, 0.82vw, 0.66rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.book-cover__title {
+  display: block;
+  max-width: 100%;
+  font-family: var(--font-serif, Georgia, serif);
+  color: #f2d995;
+  font-size: clamp(1.08rem, 2.2vw, 1.62rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: 0.09em;
+  text-shadow: 0 1px 0 rgba(255, 237, 185, 0.66), 0 -1px 1px rgba(80, 49, 21, 0.9), 0 2px 2px rgba(22, 11, 5, 0.9);
+}
+
+.book-cover__tagline {
+  color: #d4b46c;
+  font-size: clamp(0.58rem, 0.98vw, 0.76rem);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  line-height: 1.45;
+}
+
+.book-cover__gold-rule {
+  width: clamp(36px, 6vw, 58px);
+  height: 1px;
+  margin: 2px 0;
+  background: linear-gradient(90deg, transparent, #d8b75f 22%, #f2df9d 50%, #c29d4d 78%, transparent);
+}
+
+.book-cover__topic {
+  max-width: 92%;
+  color: #c6a45f;
+  font-size: clamp(0.48rem, 0.78vw, 0.62rem);
+  line-height: 1.55;
+  letter-spacing: 0.045em;
+}
+
+.book-cover__academic-tag {
+  margin-top: clamp(4px, 0.8vh, 9px);
+  color: #b99957;
+  font-size: clamp(0.44rem, 0.66vw, 0.54rem);
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  line-height: 1.45;
+}
+
+.book-cover__open-prompt {
+  margin-top: clamp(8px, 1.4vh, 14px);
+  padding: 6px 12px;
+  border: 1px solid rgba(221, 188, 111, 0.7);
+  border-radius: 2px;
+  background: rgba(35, 21, 12, 0.72);
+  color: #f2d995;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(0.52rem, 0.78vw, 0.64rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  box-shadow: 0 2px 5px rgba(18, 10, 5, 0.35);
+}
+
+
+/* ================================================================
+   Inner Parchment Leaves (cascade flip pages)
+   4 decorative pages between the cover and actual sketchbook
+   content. They flip in rapid succession after the cover swings
+   open, creating a "thumbing through pages" effect.
+   ================================================================ */
+
+.book-cover__inner-leaf {
+  position: absolute;
+  inset: 12px 15px 20px 50%;
+  transform: rotateY(0deg);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  border-radius: 2px 5px 5px 2px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Front side of each inner leaf: warm parchment */
+.book-cover__leaf-front {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0.5px);
+  background:
+    linear-gradient(135deg, #f6edd9 0%, #efe3cc 40%, #f8f1e2 100%);
+  border: 1px solid rgba(155, 130, 95, 0.28);
+  box-shadow:
+    inset 0 0 20px rgba(120, 90, 55, 0.08),
+    inset -2px 0 6px rgba(120, 90, 55, 0.06);
+}
+
+/* Back side of each inner leaf */
+.book-cover__leaf-back {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg) translateZ(0.5px);
+  background:
+    linear-gradient(225deg, #f2e8d2 0%, #ebe0c9 40%, #f5eedf 100%);
+  border: 1px solid rgba(155, 130, 95, 0.22);
+  box-shadow:
+    inset 0 0 18px rgba(120, 90, 55, 0.06),
+    inset 2px 0 6px rgba(120, 90, 55, 0.05);
+}
+
+/* Slight color variation per leaf for depth */
+.book-cover__inner-leaf--1 .book-cover__leaf-front {
+  background: linear-gradient(135deg, #f4e8d2, #ecdcc2 50%, #f6eedc);
+}
+.book-cover__inner-leaf--2 .book-cover__leaf-front {
+  background: linear-gradient(135deg, #f7eed8, #f0e4cc 50%, #f9f2e3);
+}
+.book-cover__inner-leaf--3 .book-cover__leaf-front {
+  background: linear-gradient(135deg, #f3e6ce, #ebdbc4 50%, #f5eddb);
+}
+.book-cover__inner-leaf--4 .book-cover__leaf-front {
+  background: linear-gradient(135deg, #f8f0dc, #f2e7d0 50%, #faf4e7);
+}
+
+/* Z-stacking: leaf 1 is highest (closest to cover), 4 is lowest (closest to content) */
+.book-cover__inner-leaf--1 { z-index: 34; }
+.book-cover__inner-leaf--2 { z-index: 33; }
+.book-cover__inner-leaf--3 { z-index: 32; }
+.book-cover__inner-leaf--4 { z-index: 31; }
+
+
+/* ================================================================
+   Opening Animation Sequence
+   Cover swings open first, then leaves cascade in rapid succession.
+   Each leaf flips slightly faster than the last (accelerating effect
+   like thumbing through a book).
+   
+   Timeline (total ~2800ms):
+     Cover:  0ms    → 1500ms  (heavy hardcover, slow and dramatic)
+     Leaf 1: 400ms  → 1300ms  (starts while cover is mid-swing)
+     Leaf 2: 650ms  → 1450ms
+     Leaf 3: 850ms  → 1550ms
+     Leaf 4: 1050ms → 1650ms  (fastest flip, final page before content)
+     Content reveal: ~1400ms onward
+   ================================================================ */
+
+.book-cover-stage--opening .book-cover {
+  animation: hardcoverSwing 1500ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  will-change: transform;
+}
+
+.book-cover-stage--opening .book-cover__face--front {
+  pointer-events: none;
+}
+
+.book-cover-stage--opening .book-cover__cast-shadow {
+  animation: coverCastShadow 2000ms ease-in-out forwards;
+}
+
+/* Cascade: each leaf starts slightly after the previous, and flips faster */
+.book-cover-stage--opening .book-cover__inner-leaf--1 {
+  animation: leafFlipCascade 900ms cubic-bezier(0.22, 0.68, 0.35, 1) 400ms both;
+}
+.book-cover-stage--opening .book-cover__inner-leaf--2 {
+  animation: leafFlipCascade 800ms cubic-bezier(0.18, 0.72, 0.32, 1) 650ms both;
+}
+.book-cover-stage--opening .book-cover__inner-leaf--3 {
+  animation: leafFlipCascade 700ms cubic-bezier(0.15, 0.76, 0.30, 1) 850ms both;
+}
+.book-cover-stage--opening .book-cover__inner-leaf--4 {
+  animation: leafFlipCascade 600ms cubic-bezier(0.12, 0.80, 0.28, 1) 1050ms both;
+}
+
+/* Hardcover swing: slow start, heavy momentum, gentle settle, then vanish */
+@keyframes hardcoverSwing {
+  0%   { transform: rotateY(0deg);    visibility: visible; }
+  10%  { transform: rotateY(-8deg);   visibility: visible; }
+  25%  { transform: rotateY(-28deg);  visibility: visible; }
+  55%  { transform: rotateY(-100deg); visibility: visible; }
+  80%  { transform: rotateY(-164deg); visibility: visible; }
+  92%  { transform: rotateY(-178deg); visibility: visible; }
+  97%  { transform: rotateY(-181deg); visibility: visible; }
+  99%  { transform: rotateY(-180deg); visibility: visible; }
+  100% { transform: rotateY(-180deg); visibility: hidden; }
+}
+
+/* Inner leaf cascade: quick, papery flip then vanish */
+@keyframes leafFlipCascade {
+  0%   { transform: rotateY(0deg);    visibility: visible; }
+  40%  { transform: rotateY(-72deg);  visibility: visible; }
+  75%  { transform: rotateY(-162deg); visibility: visible; }
+  90%  { transform: rotateY(-183deg); visibility: visible; }
+  99%  { transform: rotateY(-180deg); visibility: visible; }
+  100% { transform: rotateY(-180deg); visibility: hidden; }
+}
+
+/* Shadow grows as cover opens, intensifies during cascade, then fades */
+@keyframes coverCastShadow {
+  0%   { opacity: 0;    transform: scaleX(0.86); }
+  12%  { opacity: 0.2;  transform: scaleX(0.92); }
+  30%  { opacity: 0.55; transform: scaleX(1.08); }
+  55%  { opacity: 0.7;  transform: scaleX(1.14); }
+  75%  { opacity: 0.35; transform: scaleX(1.02); }
+  90%  { opacity: 0.1;  transform: scaleX(0.9); }
+  100% { opacity: 0;    transform: scaleX(0.86); }
+}
+
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .book-cover {
+    inset: 8px 8px 14px 50%;
+  }
+
+  .book-cover__inner-leaf {
+    inset: 10px 10px 16px 50%;
+  }
+
+  .book-cover__content {
+    inset: 24% 5% 12% 18%;
+    gap: 6px;
+    padding-inline: 4px;
+  }
+
+  .book-cover__title {
+    font-size: clamp(0.72rem, 4vw, 1.08rem);
+    letter-spacing: 0.04em;
+  }
+
+  .book-cover__edition,
+  .book-cover__academic-tag { font-size: 0.4rem; }
+  .book-cover__tagline { font-size: 0.48rem; }
+  .book-cover__topic { font-size: 0.38rem; }
+  .book-cover__open-prompt { padding: 4px 7px; font-size: 0.44rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-cover-stage--opening .book-cover,
+  .book-cover-stage--opening .book-cover__cast-shadow,
+  .book-cover-stage--opening .book-cover__inner-leaf--1,
+  .book-cover-stage--opening .book-cover__inner-leaf--2,
+  .book-cover-stage--opening .book-cover__inner-leaf--3,
+  .book-cover-stage--opening .book-cover__inner-leaf--4 {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}

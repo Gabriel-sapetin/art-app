@@ -1,67 +1,178 @@
 import { useInView } from '../hooks/useInView';
+import TactileSketchbookModal from '../components/TactileSketchbookModal';
 import './HomePage.css';
 
-export default function HomePage() {
-  const [heroRef, heroVisible] = useInView();
+export default function HomePage({ isBookOpen = false, isOpening = false, onOpenBook, onCloseToCover }) {
   const [previewRef, previewVisible] = useInView();
 
   const periods = [
-    { name: 'Prehistoric Art', desc: 'Cave paintings, petroglyphs, and the dawn of creativity', icon: '🪨' },
-    { name: 'Stone Tools', desc: 'Early artmaking materials and techniques', icon: '🔨' },
-    { name: 'Medieval Art', desc: 'Illuminated manuscripts, mosaics, and stained glass', icon: '⛪' },
-    { name: 'Renaissance Artists', desc: 'Donatello, Giotto, Brunelleschi, and more', icon: '🎨' },
-    { name: 'Classical Greek', desc: 'Pottery, painting, and the pursuit of naturalism', icon: '🏛️' },
+    {
+      id: 'prehistoric',
+      name: 'Prehistoric Art',
+      subtitle: 'Dawn of Visual Culture (c. 40,000 BCE)',
+      desc: 'Cave paintings, petroglyphs, ancient sculpture, and early symbolic expression.',
+      bg: '/assets/prehistoric bg.jpg',
+      tag: 'Period 01',
+    },
+    {
+      id: 'stone-tools',
+      name: 'Stone Tools',
+      subtitle: 'Lithic Reduction & Early Technology',
+      desc: 'Pebble tools, bifacial hand axes, flake tools, and blade techniques from Olduvai Gorge.',
+      bg: '/assets/stone tools bg.jpg',
+      tag: 'Period 02',
+    },
+    {
+      id: 'medieval',
+      name: 'Medieval Art',
+      subtitle: 'Sacred Splendor & Illumination',
+      desc: 'Illuminated manuscripts, Byzantine mosaics, Gothic stained glass, and the Bayeux Tapestry.',
+      bg: '/assets/medieval bg.jpg',
+      tag: 'Period 03',
+    },
+    {
+      id: 'artists-intro',
+      name: 'Renaissance Masters',
+      subtitle: 'Western European Innovations',
+      desc: 'Donatello, Giotto, Brunelleschi, Alberti, Cimabue, Fra Angelico, and Ghiberti.',
+      bg: '/assets/donatello bg.jpg',
+      tag: 'Period 04',
+    },
+    {
+      id: 'greek',
+      name: 'Classical Greek',
+      subtitle: 'Vessels, Naturalism & Polychromy',
+      desc: 'Kerch vase painting, red-figure pottery, the Pitsa panel, and classic Greek pottery forms.',
+      bg: '/assets/classical greek bg.jpg',
+      tag: 'Period 05',
+    },
   ];
 
+  const handlePeriodClick = (tabId) => {
+    window.dispatchEvent(new CustomEvent('select-explore-tab', { detail: tabId }));
+    const exploreSection = document.getElementById('explore');
+    if (exploreSection) {
+      exploreSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleBeginExploring = (e) => {
+    e.preventDefault();
+    const periodsSection = document.getElementById('periods');
+    if (periodsSection) {
+      periodsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Keep the real spread beneath its front cover so the cover reveals the actual pages.
+  if (!isBookOpen) {
+    return (
+      <section id="home" className="home home--sole-cover">
+        <div className="home__sole-cover-container">
+          <TactileSketchbookModal
+            key="cover-opening-sketchbook"
+            inline
+            initialArtworkId={1}
+            showCover
+            isBookOpening={isOpening}
+            onOpenBook={onOpenBook}
+            onCloseToCover={onCloseToCover}
+          />
+        </div>
+      </section>
+    );
+  }
+
+  // Opened Book & Full Homepage Experience
   return (
     <section id="home" className="home">
-      <div className="home__hero" ref={heroRef}>
-        <div className={`home__hero-content fade-in ${heroVisible ? 'visible' : ''}`}>
-          <div className="home__badge">Module 3 · Art Appreciation Midterm</div>
-          <h1 className="home__title">
-            <span className="home__title-line">Atelier</span>
-            <span className="home__title-line home__title-accent">Occidental</span>
-          </h1>
-          <p className="home__subtitle annotation">An Interactive Journey Through Western Art History</p>
-          <p className="home__intro">
-            Step inside a living sketchbook where ancient cave paintings, medieval masterpieces, 
-            and Renaissance innovations come alive. Explore artworks, meet the masters who shaped 
-            Western art, and test your knowledge through interactive activities.
-          </p>
-          <div className="home__cta-group">
-            <a href="#explore" className="home__cta home__cta--primary" onClick={(e) => { e.preventDefault(); document.getElementById('explore')?.scrollIntoView({ behavior: 'smooth' }); }}>
-              Begin Exploring
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-            </a>
-            <a href="#gallery" className="home__cta home__cta--secondary" onClick={(e) => { e.preventDefault(); document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' }); }}>
-              View Art Plates
-            </a>
-          </div>
+      <div className="home__book-stage">
+        <div className="home__open-book-wrap">
+          <TactileSketchbookModal
+            key="open-sketchbook"
+            inline
+            initialArtworkId={1}
+            onCloseToCover={onCloseToCover}
+          />
         </div>
-        <div className={`home__hero-visual fade-in ${heroVisible ? 'visible' : ''}`}>
-          <div className="home__sketchbook">
-            <div className="home__sketch-page home__sketch-page--left">
-              <img src="/assets/El Castillo Cave Painting, Spain (the oldest European cave art, with hand stencils, claviforms and disks).jpg" alt="El Castillo Cave Painting — one of the oldest European cave artworks" />
-              <span className="home__sketch-caption annotation">El Castillo Cave, Spain · c. 40,800 years ago</span>
-            </div>
-            <div className="home__sketch-page home__sketch-page--right">
-              <img src="/assets/illuminated manuscripts.jpg" alt="An illuminated manuscript from the Medieval period" />
-              <span className="home__sketch-caption annotation">Illuminated Manuscript · Medieval Europe</span>
-            </div>
-          </div>
+
+        <div className="home__cta-group">
+          <a
+            href="#periods"
+            className="home__cta home__cta--primary"
+            onClick={handleBeginExploring}
+          >
+            Begin Exploring
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M7 17L17 7H7M17 7V17" />
+            </svg>
+          </a>
         </div>
       </div>
 
-      <div className="home__periods container" ref={previewRef}>
-        <h2 className={`section-title fade-in ${previewVisible ? 'visible' : ''}`}>What You'll Discover</h2>
-        <div className="section-divider" />
+      <div id="periods" className="home__periods" ref={previewRef}>
+        {/* Header with the Parchment Paper as Padding */}
+        <div className={`home__periods-header scroll-ease-in ${previewVisible ? 'visible' : ''}`} style={{ transitionDelay: '0.04s' }}>
+          <div className="home__periods-paper-pad">
+            <img
+              src="/assets/parchment-paper.avif"
+              alt="Parchment manuscript folio"
+              className="home__periods-paper-img"
+              loading="lazy"
+            />
+            <div className="home__periods-paper-overlay" />
+            <div className="home__periods-header-content">
+              <h2 className="section-title">Sections of Western Art</h2>
+              <p className="section-subtitle">Select any historical section to explore its artistic traditions, techniques, and artifacts</p>
+              <div className="section-divider" />
+            </div>
+          </div>
+        </div>
+
+        {/* 5-Column Period Cards */}
         <div className="home__period-grid">
           {periods.map((p, i) => (
-            <div key={i} className={`home__period-card paper-card fade-in ${previewVisible ? 'visible' : ''}`} style={{ transitionDelay: `${i * 0.1}s` }}>
-              <span className="home__period-icon">{p.icon}</span>
-              <h3>{p.name}</h3>
-              <p>{p.desc}</p>
-            </div>
+            <article
+              key={p.id}
+              className={`home__period-card paper-card scroll-ease-in ${previewVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${0.12 + i * 0.08}s` }}
+              onClick={() => handlePeriodClick(p.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handlePeriodClick(p.id)}
+              aria-label={`Explore ${p.name}`}
+            >
+              {/* UPPER PART: ONLY THE PICTURE */}
+              <div className="home__period-img-wrap">
+                <img
+                  src={p.bg}
+                  alt={p.name}
+                  className="home__period-img"
+                  loading="lazy"
+                />
+                <div className="home__period-img-overlay" />
+              </div>
+
+              {/* UNDERNEATH ON THE PADDING: TITLE & DETAILS */}
+              <div className="home__period-body">
+                <div className="home__period-meta">
+                  <span className="plate-label">{p.tag}</span>
+                  <span className="annotation">{p.subtitle}</span>
+                </div>
+
+                <h3 className="home__period-title">{p.name}</h3>
+                <p className="home__period-desc">{p.desc}</p>
+
+                <div className="home__period-footer">
+                  <span className="home__period-link">
+                    Explore Section
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>

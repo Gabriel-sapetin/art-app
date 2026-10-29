@@ -1,13 +1,42 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 // Intersection Observer hook for scroll-based animations
 export function useInView(options = {}) {
-  const ref = useRef(null);
+  const [element, setElement] = useState(null);
   const [isInView, setIsInView] = useState(false);
+  const { threshold = 0.02, rootMargin = '0px 0px 80px 0px' } = options;
+
+  const nodeRef = useRef(null);
+
+  // Callback ref so state updates immediately when DOM node mounts
+  const refCallback = useCallback((node) => {
+    nodeRef.current = node;
+    if (node) {
+      setElement(node);
+    }
+  }, []);
+
+  // Also support .current property assignment
+  Object.defineProperty(refCallback, 'current', {
+    get: () => nodeRef.current,
+    set: (node) => {
+      nodeRef.current = node;
+      if (node) {
+        setElement(node);
+      }
+    },
+    configurable: true,
+  });
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+    if (isInView || !element) return;
+
+    // Check if element is already inside viewport on mount
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setIsInView(true);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -16,14 +45,14 @@ export function useInView(options = {}) {
           observer.unobserve(element);
         }
       },
-      { threshold: 0.1, ...options }
+      { threshold, rootMargin }
     );
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [element, isInView, threshold, rootMargin]);
 
-  return [ref, isInView];
+  return [refCallback, isInView];
 }
 
 // Local storage hook for comments
@@ -49,4 +78,3 @@ export function useLocalStorage(key, initialValue) {
 
   return [storedValue, setValue];
 }
-

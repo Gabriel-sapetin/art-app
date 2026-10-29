@@ -52,7 +52,7 @@ export const artists = [
     image: "/assets/Leon Battista Alberti.jpg",
     nationality: "Italian",
     period: "Renaissance",
-    bio: "Leon Battista Alberti was the quintessential Renaissance Man — a polymath whose interests and achievements spanned architecture, art theory, literature, philosophy, mathematics, and linguistics. His theoretical writings on painting, sculpture, and architecture provided intellectual foundations for Renaissance artistic practice.",
+    bio: "Leon Battista Alberti was the quintessential Renaissance Man, a polymath whose interests and achievements spanned architecture, art theory, literature, philosophy, mathematics, and linguistics. His theoretical writings on painting, sculpture, and architecture provided intellectual foundations for Renaissance artistic practice.",
     notableWorks: [
       "De Pictura (On Painting)",
       "De Re Aedificatoria (On the Art of Building)",

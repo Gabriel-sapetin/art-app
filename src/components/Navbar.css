@@ -51,6 +51,14 @@
   background: var(--color-ivory);
 }
 
+.navbar__logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
 .navbar__logo-text {
   display: flex;
   flex-direction: column;

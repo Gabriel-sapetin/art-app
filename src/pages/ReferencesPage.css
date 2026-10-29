@@ -24,6 +24,12 @@
   line-height: 1.8;
   color: var(--color-charcoal);
   margin: 0;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: left;
+  text-indent: 2rem;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .references__section-block {
@@ -144,6 +150,12 @@
   line-height: 1.7;
   color: var(--color-charcoal);
   margin: 0;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: left;
+  text-indent: 2rem;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 @media (max-width: 768px) {
@@ -152,3 +164,4 @@
     padding: var(--space-md);
   }
 }
+

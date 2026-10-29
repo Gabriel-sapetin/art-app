@@ -1,307 +1,376 @@
-import { useState } from 'react';
-import { useInView } from '../hooks/useInView';
+import { useState, useEffect, useRef } from 'react';
+import { exploreSections } from '../data/exploreSections';
 import './ExplorePage.css';
 
-const tabs = [
-  { id: 'prehistoric', label: 'Prehistoric Art' },
-  { id: 'stone-tools', label: 'Stone Tools' },
-  { id: 'medieval', label: 'Medieval Art' },
-  { id: 'artists-intro', label: 'Western Artists' },
-  { id: 'greek', label: 'Greek Painting' },
+const topicList = [
+  {
+    id: 'prehistoric',
+    label: 'Prehistoric Art',
+    tag: 'c. 40,000 to 1,000 BCE',
+    bg: '/assets/prehistoric bg.jpg',
+    lead: 'The dawn of human creative expression before written history, including cave paintings, rock carvings, and the four great prehistoric ages.'
+  },
+  {
+    id: 'stone-tools',
+    label: 'Stone Tools',
+    tag: 'Lithic Technology',
+    bg: '/assets/stone tools bg.jpg',
+    lead: 'How early humans shaped natural rock into tools for survival and aesthetic mastery across Oldowan, Acheulean, and blade traditions.'
+  },
+  {
+    id: 'medieval',
+    label: 'Medieval Art',
+    tag: '5th to 15th Century',
+    bg: '/assets/medieval bg.jpg',
+    lead: 'Sacred grandeur, luminous stained glass, golden mosaics, and royal craftsmanship of the Middle Ages in Western Europe.'
+  },
+  {
+    id: 'artists-intro',
+    label: 'Western Artists',
+    tag: 'Renaissance Pioneers',
+    bg: '/assets/donatello bg.jpg',
+    lead: 'The pioneers of the Italian Renaissance, including Giotto, Brunelleschi, Donatello, and Alberti, who reshaped Western art through perspective.'
+  },
+  {
+    id: 'greek',
+    label: 'Greek Painting',
+    tag: 'Classical Hellenic',
+    bg: '/assets/classical greek bg.jpg',
+    lead: 'Masterpieces of vase painting, red-figure technique, the archaic Pitsa wooden panel, and ceremonial vessel typologies.'
+  },
 ];
 
-function PrehistoricSection() {
-  const [ref, visible] = useInView();
-  return (
-    <div ref={ref} className={`explore__content fade-in ${visible ? 'visible' : ''}`}>
-      <div className="explore__text-block">
-        <h3>What Is Prehistoric Art?</h3>
-        <p>Prehistoric art refers to all visual works created before people began keeping written records. Since writing first appeared in ancient Mesopotamia before 3000 B.C.E., the term generally covers art produced earlier — cave paintings, carvings, early sculptures, and structures that early humans used to express ideas, beliefs, and experiences about their world.</p>
-        <p>Some of the earliest known examples of decorative art have been found in Africa and are estimated to be around 100,000 years old. These works remind us that the impulse to create is deeply woven into what it means to be human.</p>
-      </div>
-
-      <div className="explore__grid-two">
-        <div className="paper-card">
-          <h4>Main Periods of Prehistoric Art</h4>
-          <ul className="explore__list">
-            <li><strong>Stone Age</strong> — The earliest period of human tool use and artistic creation</li>
-            <li><strong>Neolithic Period</strong> — Marked by the development of agriculture, pottery, and permanent settlements</li>
-            <li><strong>Bronze Age</strong> — Characterized by metalworking and more complex societies</li>
-            <li><strong>Iron Age</strong> — The introduction of iron tools and weapons transformed daily life</li>
-          </ul>
-        </div>
-        <div className="paper-card">
-          <h4>Why Early People Made Art</h4>
-          <p>Art likely helped prehistoric communities share messages, express spiritual beliefs, honor the natural world, and transmit knowledge across generations. Animals appear frequently — especially in communities dependent on hunting and herding. Prehistoric images were more than decoration: their meanings were deeply connected to the customs, values, and beliefs of their creators.</p>
-        </div>
-      </div>
-
-      <div className="explore__grid-three">
-        <div className="paper-card explore__term-card">
-          <img src="/assets/petroglyphs.jpg" alt="Petroglyphs carved into rock" loading="lazy" />
-          <h4>Petroglyphs</h4>
-          <p>Pictures or patterns cut, scratched, or carved into rock surfaces — one of the earliest forms of visual communication.</p>
-        </div>
-        <div className="paper-card explore__term-card">
-          <img src="/assets/pictographs.jpg" alt="Painted pictographs on rock" loading="lazy" />
-          <h4>Pictographs</h4>
-          <p>Images or signs painted or drawn on surfaces using natural pigments to communicate ideas and record stories.</p>
-        </div>
-        <div className="paper-card explore__term-card">
-          <img src="/assets/ancient sculpture.jpeg" alt="Ancient sculpture" loading="lazy" />
-          <h4>Ancient Sculpture</h4>
-          <p>Three-dimensional objects shaped from stone, ivory, or bone, often serving symbolic or ceremonial purposes.</p>
-        </div>
-      </div>
-
-      <div className="explore__grid-two">
-        <div className="paper-card explore__term-card">
-          <img src="/assets/megalithics.jpg" alt="Megalithic stone arrangement" loading="lazy" />
-          <h4>Megalithic Art</h4>
-          <p>Art connected with large stones — including carved stones and works created as part of stone arrangements or monuments. These structures required significant community effort.</p>
-        </div>
-        <div className="paper-card explore__term-card">
-          <img src="/assets/El Castillo Cave Painting, Spain (the oldest European cave art, with hand stencils, claviforms and disks).jpg" alt="El Castillo Cave Painting" loading="lazy" />
-          <h4>El Castillo Cave</h4>
-          <p>Located in Spain, this cave contains some of the oldest European cave art — hand stencils, claviforms (club-shaped signs), and disk markings dated to at least 40,800 years ago. Discovered by archaeologist Hermilio Alcalde del Río in 1903.</p>
-        </div>
-      </div>
-
-      <div className="paper-card explore__callout">
-        <span className="annotation">Did You Know?</span>
-        <p>Researchers have debated whether Neanderthals (<em>Homo neanderthalensis</em>) may have created some of the oldest cave images. If so, the origins of art may extend even further back in time than previously believed.</p>
-        <img src="/assets/claviforms.jpg" alt="Claviforms — club-shaped signs in cave art" loading="lazy" className="explore__callout-img" />
-        <span className="museum-caption">Claviforms — club-shaped signs found in prehistoric cave art</span>
-      </div>
-    </div>
-  );
-}
-
-function StoneToolsSection() {
-  const [ref, visible] = useInView();
-  const tools = [
-    { name: 'Pebble Tools', img: '/assets/pebble tool.jpg', desc: 'Rough cutting tools made by hitting a rounded stone with another stone to create a sharp edge. Among the earliest known tools, used for basic chopping and cutting.' },
-    { name: 'Bifacial Tools & Hand Axes', img: '/assets/bifacial tool.jpg', desc: 'Tools worked on both sides, often shaped like an oval or almond. Their edges served for cutting, scraping, and as weapons. Strongly associated with the Acheulean tool tradition.' },
-    { name: 'Flake Tools', img: '/assets/flake tool.jpg', desc: 'Made from pieces knocked off a larger stone. The detached flake could be used directly, while the remaining core could also be shaped. Small extra flakes were removed (retouch) to refine edges.' },
-    { name: 'Blade Tools', img: '/assets/blade tools.jpg', desc: 'Long, narrow stone flakes that could be used alone or attached to handles. Produced through lithic reduction — striking pieces off a larger stone until a useful tool emerges.' },
-  ];
-
-  return (
-    <div ref={ref} className={`explore__content fade-in ${visible ? 'visible' : ''}`}>
-      <div className="explore__text-block">
-        <h3>Stone Tools and Early Artmaking</h3>
-        <p>Early humans worked with natural materials — primarily stone, but also wood, bone, ivory, and antlers — to create tools for survival and creative expression. Stone tools, known from roughly two million years ago, helped people cut, prepare materials, hunt, and carry out daily tasks.</p>
-      </div>
-
-      <div className="explore__grid-three">
-        <div className="paper-card explore__term-card">
-          <img src="/assets/igneous rock.jpg" alt="Igneous (volcanic) rock" loading="lazy" />
-          <h4>Igneous (Volcanic) Rock</h4>
-          <p>Formed when molten material cools and hardens. Part of the igneous-rock family, these rocks provided hard, fracture-predictable material for toolmaking.</p>
-        </div>
-        <div className="paper-card explore__term-card">
-          <img src="/assets/sedimentary rocks.jpg" alt="Sedimentary rock" loading="lazy" />
-          <h4>Sedimentary Rock</h4>
-          <p>Created when layers of particles build up and become compacted over time. The layered structure affected how these stones could be shaped.</p>
-        </div>
-        <div className="paper-card explore__term-card">
-          <img src="/assets/metamorphic rock.jpg" alt="Metamorphic rock" loading="lazy" />
-          <h4>Metamorphic Rock</h4>
-          <p>Changed from an earlier rock type after exposure to strong heat, pressure, or both. These transformations created new properties useful for different tools.</p>
-        </div>
-      </div>
-
-      <h3 className="explore__sub-heading">The Four Paleolithic Tool Types</h3>
-      <div className="explore__tools-grid">
-        {tools.map((tool, i) => (
-          <div key={i} className="paper-card explore__tool-card">
-            <div className="explore__tool-img-wrap">
-              <img src={tool.img} alt={tool.name} loading="lazy" />
-              <span className="plate-label">Plate {i + 1}</span>
-            </div>
-            <div className="explore__tool-info">
-              <h4>{tool.name}</h4>
-              <p>{tool.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="paper-card explore__callout">
-        <span className="annotation">Key Location</span>
-        <img src="/assets/olduvai gorge.jpg" alt="Olduvai Gorge, Tanzania" loading="lazy" className="explore__callout-img" />
-        <h4>Olduvai Gorge, Tanzania</h4>
-        <p>An important archaeological site where researchers (paleoanthropologists) found very early stone tools, including simple chopping tools that are among the oldest evidence of human toolmaking.</p>
-      </div>
-    </div>
-  );
-}
-
-function MedievalSection() {
-  const [ref, visible] = useInView();
-  const artForms = [
-    { name: 'Illuminated Manuscripts', img: '/assets/illuminated manuscripts.jpg', desc: 'Handwritten books decorated with vivid colors, ornamental designs, and sometimes gold or silver details, created by skilled craftspeople known as illuminators.' },
-    { name: 'Mosaics', img: '/assets/mosaics.jpg', desc: 'Images assembled from many small pieces of colored glass, stone, or ceramic called tesserae, used to decorate church walls and ceilings with shimmering scenes.' },
-    { name: 'Stained Glass', img: '/assets/stained glass.jpg', desc: 'Colored glass pieces fitted together with lead strips to create luminous designs and biblical narratives in Gothic cathedrals.' },
-    { name: 'Bayeux Tapestry', img: '/assets/bayeux tapestry.jpg', desc: 'A 230-foot-long embroidered linen artwork made of eight strips stitched with colored wool, narrating the Norman Conquest of 1066.' },
-    { name: 'Fresco & Panel Painting', img: '/assets/Panel Painting.jpg', desc: 'Fresco applies pigment to wet plaster so it bonds permanently; panel painting uses tempera on flat wooden surfaces for religious images and altarpieces.' },
-    { name: 'Ceramics', img: '/assets/ceramics.jpg', desc: 'Clay objects shaped and hardened by fire for practical and decorative purposes — pots, jars, tiles, and architectural ornaments.' },
-    { name: 'Metalwork & Goldsmithing', img: '/assets/heraldry.jpg', desc: 'Specialists shaped silver and gold into church ornaments, jewelry, sculptures, and doors, creating some of the most treasured objects of the medieval world.' },
-    { name: 'Heraldry', img: '/assets/heraldry.jpg', desc: 'The art of designing coats of arms using symbolic animals, geometric patterns, colors, and mottos to create recognizable visual identities.' },
-  ];
-
-  return (
-    <div ref={ref} className={`explore__content fade-in ${visible ? 'visible' : ''}`}>
-      <div className="explore__text-block">
-        <h3>Medieval Arts in Europe</h3>
-        <p>Medieval art, produced during the Middle Ages, drew on Roman artistic traditions, early Christian practices, and the art of northern European peoples. It encompassed a remarkable variety of forms — from the solemn beauty of Byzantine mosaics and Gothic cathedrals to the intricate detail of illuminated manuscripts and the narrative power of the Bayeux Tapestry.</p>
-        <p>Three major traditions shaped medieval art: <strong>Early Christian art</strong> developed for worship and religious imagery; <strong>Byzantine art</strong> became known for its formal icons and golden mosaics; and <strong>Gothic art</strong> expressed itself in soaring cathedrals, sculpture, and colorful stained glass windows.</p>
-      </div>
-
-      <div className="explore__medieval-grid">
-        {artForms.map((form, i) => (
-          <div key={i} className="paper-card explore__medieval-card">
-            <img src={form.img} alt={form.name} loading="lazy" />
-            <div className="explore__medieval-info">
-              <h4>{form.name}</h4>
-              <p>{form.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ArtistsIntroSection() {
-  const [ref, visible] = useInView();
-  return (
-    <div ref={ref} className={`explore__content fade-in ${visible ? 'visible' : ''}`}>
-      <div className="explore__text-block">
-        <h3>Important Artists of Western Europe</h3>
-        <p>The transition from medieval to Renaissance art was shaped by remarkable individuals who challenged existing conventions and introduced new ways of seeing the world. These seven artists — spanning from the late 13th through the 15th century — collectively laid the foundations for the artistic revolution known as the Renaissance.</p>
-        <p>Explore each artist in depth in the <a href="#artists" onClick={(e) => { e.preventDefault(); document.getElementById('artists')?.scrollIntoView({ behavior: 'smooth' }); }}>Artist Spotlight</a> section below.</p>
-      </div>
-      <div className="explore__grid-two">
-        <div className="paper-card">
-          <h4>Key Concepts</h4>
-          <ul className="explore__list">
-            <li><strong>Renaissance Man</strong> — Someone who develops knowledge and ability in many different areas, exemplified by Leon Battista Alberti</li>
-            <li><strong>Italo-Byzantine Style</strong> — Italian religious art using visual conventions inherited from Byzantine painting</li>
-            <li><strong>Metallurgy</strong> — The study and practice of extracting, preparing, and shaping metals</li>
-            <li><strong>Gates of Paradise</strong> — The celebrated name Michelangelo gave to Ghiberti's bronze doors</li>
-          </ul>
-        </div>
-        <div className="paper-card">
-          <h4>Historical Context</h4>
-          <p>Giorgio Vasari, an Italian artist and writer, documented these artists in his influential book <em>Lives of the Artists</em>, which remains a primary source for understanding Renaissance art history. The artists featured in our module worked primarily in Florence, which became the cradle of the Renaissance.</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function GreekSection() {
-  const [ref, visible] = useInView();
-  const vessels = [
-    { name: 'Krater', img: '/assets/Krater.jpg', desc: 'A broad, deep vessel with a wide mouth used for mixing wine with water at social gatherings called symposia.' },
-    { name: 'Lebes Gamikos', img: '/assets/Lebes Gamikos.jpg', desc: 'A vessel associated with wedding customs and the ritual bath of a bride, typically with a lid and raised handles.' },
-    { name: 'Lekanis', img: '/assets/Lekanis.jpg', desc: 'A shallow bowl with a pair of horizontal handles and a low, wide base, used for various purposes.' },
-    { name: 'Pelike', img: '/assets/pelike.jpg', desc: 'A pottery container used for holding or storing liquids such as wine, with a distinctive wide body.' },
-  ];
-
-  return (
-    <div ref={ref} className={`explore__content fade-in ${visible ? 'visible' : ''}`}>
-      <div className="explore__text-block">
-        <h3>Classical Greek Painting</h3>
-        <p>Classical Greek art appeared on pottery, wooden panels, tomb walls, and architectural surfaces. Artists depicted mythology, battles, and everyday activities while increasingly striving for naturalism — representing people, animals, and objects in believable, lifelike ways. They also developed linear perspective, arranging lines and forms to suggest depth on flat surfaces.</p>
-      </div>
-
-      <div className="explore__grid-two">
-        <div className="paper-card explore__term-card">
-          <img src="/assets/Kerch Vase Painting.jpg" alt="Kerch Vase Painting" loading="lazy" />
-          <h4>Kerch Vase Painting</h4>
-          <p>A form of Greek red-figure pottery named after Kerch, where many examples were found. Common subjects included women's lives and mythological scenes, representing the final flowering of the red-figure tradition.</p>
-        </div>
-        <div className="paper-card explore__term-card">
-          <img src="/assets/Pitsa Panel.jpg" alt="The Pitsa Panel" loading="lazy" />
-          <h4>The Pitsa Panel (c. 540–530 BCE)</h4>
-          <p>One of the earliest surviving examples of Greek panel painting. It depicts a religious procession with figures bearing offerings, providing rare direct evidence of ancient Greek painting techniques.</p>
-        </div>
-      </div>
-
-      <h3 className="explore__sub-heading">Greek Pottery Forms</h3>
-      <div className="explore__vessels-grid">
-        {vessels.map((v, i) => (
-          <div key={i} className="paper-card explore__vessel-card">
-            <img src={v.img} alt={v.name} loading="lazy" />
-            <h4>{v.name}</h4>
-            <p>{v.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="explore__grid-two">
-        <div className="paper-card explore__term-card">
-          <img src="/assets/Tomb Painting.jpg" alt="Tomb Painting" loading="lazy" />
-          <h4>Tomb & Wall Painting</h4>
-          <p>Images painted in burial spaces and on walls, depicting banquet scenes, athletics, myths, and religious rituals connected to beliefs about death and the afterlife.</p>
-        </div>
-        <div className="paper-card">
-          <h4>Painting Techniques</h4>
-          <ul className="explore__list">
-            <li><strong>Tempera</strong> — Pigments mixed with a water-based binding material</li>
-            <li><strong>Encaustic</strong> — Pigments mixed with heated wax for application</li>
-            <li><strong>Fresco</strong> — Pigment placed on fresh wet plaster, bonding as it dries</li>
-            <li><strong>Polychromy</strong> — The use of several colors together in a work of art</li>
-            <li><strong>Red-Figure Pottery</strong> — Figures left in clay color while the background is painted dark</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function ExplorePage() {
-  const [activeTab, setActiveTab] = useState('prehistoric');
-  const [headerRef, headerVisible] = useInView();
+  const [activeTopicId, setActiveTopicId] = useState('prehistoric');
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+  const [viewMode, setViewMode] = useState('portrayal'); // 'portrayal' or 'hub'
+  const stageRef = useRef(null);
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'prehistoric': return <PrehistoricSection />;
-      case 'stone-tools': return <StoneToolsSection />;
-      case 'medieval': return <MedievalSection />;
-      case 'artists-intro': return <ArtistsIntroSection />;
-      case 'greek': return <GreekSection />;
-      default: return <PrehistoricSection />;
+  // Listen for navigation events from Homepage cards
+  useEffect(() => {
+    const handleTopicSelect = (e) => {
+      if (e.detail && exploreSections[e.detail]) {
+        setActiveTopicId(e.detail);
+        setCurrentStepIndex(0);
+        setSelectedItemIndex(0);
+        setViewMode('portrayal');
+        if (stageRef.current) {
+          stageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    };
+    window.addEventListener('select-explore-tab', handleTopicSelect);
+    return () => window.removeEventListener('select-explore-tab', handleTopicSelect);
+  }, []);
+
+  // Reset step index and item index whenever the active topic changes
+  useEffect(() => {
+    setCurrentStepIndex(0);
+    setSelectedItemIndex(0);
+  }, [activeTopicId]);
+
+  // Reset selected item when switching steps within the topic
+  useEffect(() => {
+    setSelectedItemIndex(0);
+  }, [currentStepIndex]);
+
+  const currentSection = exploreSections[activeTopicId] || exploreSections['prehistoric'];
+  const steps = currentSection.steps;
+  const currentStep = steps[currentStepIndex] || steps[0];
+
+  const handleNextStep = () => {
+    if (currentStepIndex < steps.length - 1) {
+      setCurrentStepIndex(prev => prev + 1);
+    } else {
+      // Advance to next topic if at the end of current topic
+      const topicKeys = Object.keys(exploreSections);
+      const currentIdx = topicKeys.indexOf(activeTopicId);
+      if (currentIdx < topicKeys.length - 1) {
+        setActiveTopicId(topicKeys[currentIdx + 1]);
+        setCurrentStepIndex(0);
+      } else {
+        // Return to topic hub when finished with all epochs
+        setViewMode('hub');
+      }
     }
   };
 
+  const handlePrevStep = () => {
+    if (currentStepIndex > 0) {
+      setCurrentStepIndex(prev => prev - 1);
+    }
+  };
+
+  const jumpToStep = (index) => {
+    setCurrentStepIndex(index);
+  };
+
+  const selectTopicAndEnter = (id) => {
+    setActiveTopicId(id);
+    setCurrentStepIndex(0);
+    setSelectedItemIndex(0);
+    setViewMode('portrayal');
+  };
+
+  // Determine current image and caption for interactive steps (like Main Periods)
+  let displayImage = currentStep.image || currentSection.bg;
+  let displayCaption = currentStep.imageCaption || currentStep.title;
+  let displayMeta = currentStep.imageMeta || currentSection.tag;
+
+  if (currentStep.items && currentStep.items.length > 0) {
+    const activeItem = currentStep.items[selectedItemIndex] || currentStep.items[0];
+    displayImage = activeItem.img || displayImage;
+    displayCaption = `${activeItem.name}${activeItem.period ? ` (${activeItem.period})` : ''}${activeItem.category ? ` (${activeItem.category})` : ''}`;
+    displayMeta = activeItem.period
+      ? `Archival Epoch Specimen · ${activeItem.period}`
+      : (activeItem.category ? `Artistic Medium · ${activeItem.category}` : `Archival Plate · ${currentSection.title}`);
+  }
+
   return (
-    <section id="explore" className="explore section">
+    <section id="explore" className="explore section" ref={stageRef}>
       <div className="container">
-        <div ref={headerRef} className={`fade-in ${headerVisible ? 'visible' : ''}`}>
-          <h2 className="section-title">Explore Western Art History</h2>
-          <p className="section-subtitle">From cave walls to cathedral windows — a journey through five millennia of creativity</p>
-          <div className="section-divider" />
-        </div>
+        {/* Unified Folio Stage: One Whole Padding Container */}
+        <div className="explore__stage-container">
+          {viewMode === 'hub' ? (
+            /* HUB VIEW: Section selection grid when user chooses to exit */
+            <div className="explore__hub-view">
+              <div className="explore__hub-header">
+                <span className="plate-label">Historical Epochs · Module 3</span>
+                <h3 className="explore__hub-title">Select an Epoch to Begin Portrayal</h3>
+                <p className="explore__hub-subtitle">
+                  Each historical section provides a guided portrayal with progressive descriptions, specific artifacts, and individual step-by-step illustrations.
+                </p>
+              </div>
 
-        <div className="explore__tabs" role="tablist" aria-label="Art history topics">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              role="tab"
-              aria-selected={activeTab === tab.id}
-              className={`explore__tab ${activeTab === tab.id ? 'explore__tab--active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+              <div className="explore__hub-grid">
+                {topicList.map((t) => (
+                  <div
+                    key={t.id}
+                    className="explore__hub-card"
+                    onClick={() => selectTopicAndEnter(t.id)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') selectTopicAndEnter(t.id); }}
+                  >
+                    <div className="explore__hub-card-img-wrap">
+                      <img src={t.bg} alt={t.label} className="explore__hub-card-img" />
+                    </div>
+                    <div className="explore__hub-card-body">
+                      <span className="plate-label">{t.tag}</span>
+                      <h4 className="explore__hub-card-title">{t.label}</h4>
+                      <p className="explore__hub-card-lead">{t.lead}</p>
+                      <button className="explore__hub-card-btn" tabIndex={-1}>
+                        Enter Portrayal →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* PORTRAYAL VIEW: Individual portrayal inside one unified padding */
+            <>
+              {/* Top Bar: Exit Button + Topic Switcher + Dot Progress Indicator */}
+              <div className="explore__stage-topbar">
+                {/* Exit button so the user can exit and choose other */}
+                <button
+                  type="button"
+                  className="explore__exit-btn"
+                  onClick={() => setViewMode('hub')}
+                  title="Exit this section and choose another historical epoch"
+                  aria-label="Exit section"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                  </svg>
+                  Exit Section
+                </button>
 
-        <div className="explore__panel" role="tabpanel">
-          {renderContent()}
+                {/* Section Switcher Tabs */}
+                <div className="explore__topic-tabs" role="tablist" aria-label="Western Art Sections">
+                  {topicList.map(t => (
+                    <button
+                      key={t.id}
+                      role="tab"
+                      aria-selected={activeTopicId === t.id}
+                      className={`explore__topic-tab ${activeTopicId === t.id ? 'active' : ''}`}
+                      onClick={() => selectTopicAndEnter(t.id)}
+                    >
+                      <img src={t.bg} alt="" className="explore__topic-tab-thumb" />
+                      <span className="explore__topic-tab-text">{t.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Step Dot Progress Indicator */}
+                <div className="explore__step-indicator" aria-label={`Step ${currentStepIndex + 1} of ${steps.length}`}>
+                  <span className="explore__step-counter plate-label">
+                    Part {currentStepIndex + 1} of {steps.length}
+                  </span>
+                  <div className="explore__step-dots">
+                    {steps.map((st, idx) => (
+                      <button
+                        key={st.id}
+                        className={`explore__step-dot ${idx === currentStepIndex ? 'active' : ''} ${idx < currentStepIndex ? 'completed' : ''}`}
+                        onClick={() => jumpToStep(idx)}
+                        title={`Go to: ${st.title}`}
+                        aria-label={`Jump to Part ${idx + 1}: ${st.title}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Portrayal Area: Split Layout with Left Description & Right Picture */}
+              <div
+                className="explore__portrayal-stage"
+                key={`${activeTopicId}-${currentStepIndex}`}
+              >
+                {/* LEFT SIDE: Description, Titles & Interactive Content */}
+                <div className="explore__portrayal-left">
+                  <span className="plate-label explore__step-era">{currentSection.tag}</span>
+
+                  <h3 className="explore__step-title">{currentStep.title}</h3>
+                  <h4 className="explore__step-subtitle">{currentStep.subtitle}</h4>
+
+                  {/* Standard Paragraphs with animated entrance */}
+                  {currentStep.paragraphs && (
+                    <div className="explore__paragraphs">
+                      {currentStep.paragraphs.map((para, i) => (
+                        <p
+                          key={i}
+                          className="explore__paragraph"
+                          style={{ animationDelay: `${0.1 + i * 0.12}s` }}
+                        >
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Bullet Points if present */}
+                  {currentStep.bullets && (
+                    <div className="explore__bullets-card">
+                      {currentStep.bulletTitle && (
+                        <h5 className="explore__bullets-title">{currentStep.bulletTitle}</h5>
+                      )}
+                      <ul className="explore__bullets-list">
+                        {currentStep.bullets.map((b, i) => (
+                          <li
+                            key={i}
+                            className="explore__bullet-item"
+                            style={{ animationDelay: `${0.22 + i * 0.08}s` }}
+                          >
+                            <span className="explore__bullet-bullet" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Interactive Items (e.g., Main Periods: Stone Age, Neolithic, Bronze Age, Iron Age) */}
+                  {currentStep.items && (
+                    <div className="explore__items-container">
+                      {currentStep.lead && <p className="explore__items-lead">{currentStep.lead}</p>}
+
+                      <div className="explore__items-tabs">
+                        {currentStep.items.map((item, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            className={`explore__item-btn ${selectedItemIndex === idx ? 'active' : ''}`}
+                            onClick={() => setSelectedItemIndex(idx)}
+                          >
+                            <span className="explore__item-btn-name">{item.name}</span>
+                            {item.period && <span className="explore__item-btn-date">{item.period}</span>}
+                            {item.category && <span className="explore__item-btn-date">{item.category}</span>}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Active Item Description Box */}
+                      <div className="explore__item-detail-box" key={selectedItemIndex}>
+                        <div className="explore__item-detail-header">
+                          <h4>{currentStep.items[selectedItemIndex].name}</h4>
+                          <span className="plate-label">
+                            {currentStep.items[selectedItemIndex].period || currentStep.items[selectedItemIndex].category}
+                          </span>
+                        </div>
+                        <p>{currentStep.items[selectedItemIndex].desc}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Historical Curatorial Note if present */}
+                  {currentStep.didYouKnow && (
+                    <div className="explore__curator-note">
+                      <span className="plate-label">Historical Note</span>
+                      <p>{currentStep.didYouKnow}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* RIGHT SIDE: Dedicated Picture & Archival Specimen Plate */}
+                <div className="explore__portrayal-right">
+                  <div className="explore__specimen-plate">
+                    <div className="explore__specimen-img-wrap">
+                      <img
+                        src={displayImage}
+                        alt={displayCaption}
+                        className="explore__specimen-img"
+                        key={displayImage}
+                        loading="lazy"
+                      />
+                      <div className="explore__specimen-overlay" />
+                      <span className="plate-label explore__specimen-tag">
+                        Archival Plate: {currentSection.title}
+                      </span>
+                    </div>
+
+                    <div className="explore__specimen-caption">
+                      <p className="explore__specimen-title">{displayCaption}</p>
+                      <p className="museum-caption">{displayMeta}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Bar: Back Button, Progress Dots, Continue Button */}
+              <div className="explore__stage-bottombar">
+                <button
+                  type="button"
+                  onClick={handlePrevStep}
+                  disabled={currentStepIndex === 0}
+                  className="explore__nav-btn explore__nav-btn--prev"
+                  aria-label="Previous step"
+                >
+                  ← Back
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleNextStep}
+                  className="explore__nav-btn explore__nav-btn--next"
+                  aria-label="Continue to next part"
+                >
+                  {currentStepIndex < steps.length - 1 ? (
+                    <>
+                      Continue
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </>
+                  ) : (
+                    <>
+                      Next Section →
+                    </>
+                  )}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>

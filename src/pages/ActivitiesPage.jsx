@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useInView } from '../hooks/useInView';
 import { quizQuestions, matchingPairs, guessTheArtwork } from '../data/activities';
 import './ActivitiesPage.css';
@@ -438,50 +438,52 @@ function GuessActivity() {
 function PollActivity() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
-  const [pollVotes, setPollVotes] = useState({
-    'prehistoric': 24,
-    'medieval': 38,
-    'greek': 42,
-    'renaissance': 65
-  });
 
   const options = [
-    { id: 'prehistoric', label: 'Prehistoric Cave Art & Megaliths', desc: 'The mystical dawn of symbolic expression and primal human storytelling.' },
-    { id: 'medieval', label: 'Medieval Sacred Arts & Tapestries', desc: 'The ethereal luminescence of stained glass, illuminated manuscripts, and mosaics.' },
-    { id: 'greek', label: 'Classical Greek Painting & Vessels', desc: 'The triumph of naturalism, graceful mythology, and balanced pottery forms.' },
-    { id: 'renaissance', label: 'Early Renaissance Humanism & Perspective', desc: 'Brunelleschi’s dome, Donatello’s bronze David, and revolutionary spatial depth.' }
+    { id: 'prehistoric', label: 'Prehistoric Cave Art \u0026 Megaliths', desc: 'The mystical dawn of symbolic expression and primal human storytelling.' },
+    { id: 'medieval', label: 'Medieval Sacred Arts \u0026 Tapestries', desc: 'The ethereal luminescence of stained glass, illuminated manuscripts, and mosaics.' },
+    { id: 'greek', label: 'Classical Greek Painting \u0026 Vessels', desc: 'The triumph of naturalism, graceful mythology, and balanced pottery forms.' },
+    { id: 'renaissance', label: 'Early Renaissance Humanism \u0026 Perspective', desc: 'Brunelleschi\u2019s dome, Donatello\u2019s bronze David, and revolutionary spatial depth.' }
   ];
 
   const handleVote = (id) => {
     if (hasVoted) return;
     setSelectedOption(id);
     setHasVoted(true);
-    setPollVotes(prev => ({
-      ...prev,
-      [id]: prev[id] + 1
-    }));
   };
 
-  const totalVotes = Object.values(pollVotes).reduce((a, b) => a + b, 0);
+  const chosen = options.find(o => o.id === selectedOption);
 
   return (
     <div className="poll">
-      <div className="poll__header">
-        <p className="poll__intro">
-          Art appreciation is a deeply personal dialogue between the viewer and the past. Which epoch or visual philosophy of Western art resonates most profoundly with your creative spirit?
-        </p>
-      </div>
+      {!hasVoted && (
+        <div className="poll__header">
+          <p className="poll__intro">
+            Art appreciation is a deeply personal dialogue between the viewer and the past. Which epoch or visual philosophy of Western art resonates most profoundly with your creative spirit?
+          </p>
+        </div>
+      )}
 
-      <div className="poll__options-grid">
-        {options.map(opt => {
-          const votes = pollVotes[opt.id];
-          const pct = Math.round((votes / totalVotes) * 100);
-          const isSelected = selectedOption === opt.id;
-
-          return (
-            <div 
+      {hasVoted ? (
+        <div className="poll__thankyou">
+          <div className="poll__thankyou-emblem">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#855b32" strokeWidth="1.6">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </div>
+          <h4 className="poll__thankyou-title">Thank you for contributing your voice to our class gallery survey!</h4>
+          {chosen && (
+            <p className="poll__thankyou-choice">
+              Your selection: <em>{chosen.label}</em>
+            </p>
+          )}
+        </div>
+      ) : (
+        <div className="poll__options-grid">
+          {options.map(opt => (
+            <div
               key={opt.id}
-              className={`poll__card paper-card ${isSelected ? 'poll__card--selected' : ''}`}
+              className="poll__card paper-card"
               onClick={() => handleVote(opt.id)}
               role="button"
               tabIndex={0}
@@ -489,65 +491,67 @@ function PollActivity() {
             >
               <div className="poll__card-header">
                 <h4>{opt.label}</h4>
-                {hasVoted && <span className="poll__pct">{pct}%</span>}
               </div>
               <p className="poll__card-desc">{opt.desc}</p>
-
-              {hasVoted ? (
-                <div className="poll__bar-wrap">
-                  <div className="poll__bar" style={{ width: `${pct}%` }} />
-                  <span className="poll__count annotation">{votes} peer votes</span>
-                </div>
-              ) : (
-                <button className="activity__btn activity__btn--small">
-                  Cast Your Vote
-                </button>
-              )}
+              <button className="activity__btn activity__btn--small" tabIndex={-1}>
+                Cast Your Vote
+              </button>
             </div>
-          );
-        })}
-      </div>
-
-      {hasVoted && (
-        <div className="poll__gratitude annotation">
-          Thank you for contributing your voice to our class gallery survey! Total impressions recorded: {totalVotes}
+          ))}
         </div>
       )}
     </div>
   );
 }
 
+
 /* ── Interactive Zone Master Container ── */
 export default function ActivitiesPage() {
   const [headerRef, headerVisible] = useInView();
+  const [tabsRef, tabsVisible] = useInView({ threshold: 0.05 });
   const [activeTab, setActiveTab] = useState('quiz');
+  const [clickedTab, setClickedTab] = useState(null);
+  const [boardKey, setBoardKey] = useState(0);
+  const boardRef = useRef(null);
+
+  const handleTabSelect = (id) => {
+    setActiveTab(id);
+    setClickedTab(id);
+    setBoardKey(k => k + 1);
+    // Smooth scroll to board with a small delay so the tab highlight registers first
+    setTimeout(() => {
+      if (boardRef.current) {
+        boardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 80);
+  };
 
   const activities = [
     { 
       id: 'quiz', 
       title: 'Art History Quiz', 
-      icon: '🎯', 
+      numeral: 'I',
       tag: '10 Questions',
       desc: 'Test your understanding across all five module topics with instant feedback.' 
     },
     { 
       id: 'matching', 
       title: 'Match the Masters & Terms', 
-      icon: '🔗', 
+      numeral: 'II',
       tag: 'Tactile Pairs',
       desc: 'Pair historical figures, stone tools, and Greek pottery shapes with their definitions.' 
     },
     { 
       id: 'guess', 
       title: 'Guess the Specimen', 
-      icon: '🔍', 
+      numeral: 'III',
       tag: 'Curatorial Clues',
       desc: 'Identify prehistoric tools, Greek vases, and medieval masterworks from mystery plates.' 
     },
     { 
       id: 'poll', 
       title: 'Appreciation Poll', 
-      icon: '🗳️', 
+      numeral: 'IV',
       tag: 'Class Sentiment',
       desc: 'Cast your vote for the Western Art movement that inspires you most.' 
     }
@@ -556,23 +560,36 @@ export default function ActivitiesPage() {
   return (
     <section id="activities" className="activities section">
       <div className="container">
-        <div ref={headerRef} className={`fade-in ${headerVisible ? 'visible' : ''}`}>
-          <h2 className="section-title">Interactive Zone: Play, Solve, and Learn</h2>
-          <p className="section-subtitle">Tactile digital engagement with Western Art History and Module 3 concepts</p>
-          <div className="section-divider" />
+        {/* Parchment Paper Header — matching Artists & Sections of Western Art style */}
+        <div ref={headerRef} className={`activities__header scroll-ease-in ${headerVisible ? 'visible' : ''}`} style={{ transitionDelay: '0.04s' }}>
+          <div className="activities__paper-pad">
+            <img
+              src="/assets/parchment-paper.avif"
+              alt="Parchment manuscript folio"
+              className="activities__paper-img"
+              loading="lazy"
+            />
+            <div className="activities__paper-overlay" />
+            <div className="activities__header-content">
+              <h2 className="section-title">Interactive Zone: Play, Solve, and Learn</h2>
+              <p className="section-subtitle">Tactile digital engagement with Western Art History and Module 3 concepts</p>
+              <div className="section-divider" />
+            </div>
+          </div>
         </div>
 
         {/* Activity Tab Cards */}
-        <div className="activities__tabs-strip" role="tablist" aria-label="Interactive learning activities">
-          {activities.map(act => (
+        <div ref={tabsRef} className="activities__tabs-strip" role="tablist" aria-label="Interactive learning activities">
+          {activities.map((act, i) => (
             <button
               key={act.id}
               role="tab"
               aria-selected={activeTab === act.id}
-              className={`activities__tab-card ${activeTab === act.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(act.id)}
+              className={`activities__tab-card scroll-ease-in ${tabsVisible ? 'visible' : ''} ${activeTab === act.id ? 'active' : ''} ${clickedTab === act.id ? 'just-clicked' : ''}`}
+              style={{ transitionDelay: `${0.08 * i}s` }}
+              onClick={() => handleTabSelect(act.id)}
             >
-              <div className="activities__tab-icon">{act.icon}</div>
+              <div className="activities__tab-numeral">{act.numeral}</div>
               <div className="activities__tab-text">
                 <div className="activities__tab-header">
                   <span className="activities__tab-title">{act.title}</span>
@@ -585,7 +602,7 @@ export default function ActivitiesPage() {
         </div>
 
         {/* Active Activity Board */}
-        <div className="activities__board paper-card" role="tabpanel">
+        <div className={`activities__board paper-card scroll-ease-in ${tabsVisible ? 'visible' : ''}`} role="tabpanel" ref={boardRef} key={boardKey} style={{ scrollMarginTop: '80px', transitionDelay: '0.36s' }}>
           {activeTab === 'quiz' && <QuizActivity />}
           {activeTab === 'matching' && <MatchingActivity />}
           {activeTab === 'guess' && <GuessActivity />}
@@ -595,3 +612,4 @@ export default function ActivitiesPage() {
     </section>
   );
 }
+

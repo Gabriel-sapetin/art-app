@@ -43,7 +43,7 @@ export default function GalleryPage() {
   return (
     <section id="gallery" className="gallery section">
       <div className="container">
-        <div ref={headerRef} className={`fade-in ${headerVisible ? 'visible' : ''}`}>
+        <div ref={headerRef} className={`section-header-box scroll-ease-in ${headerVisible ? 'visible' : ''}`} style={{ transitionDelay: '0.04s' }}>
           <h2 className="section-title">The Art Plates</h2>
           <p className="section-subtitle">A curated collection of illustrated plates from the history of Western art</p>
           <div className="section-divider" />

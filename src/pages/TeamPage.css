@@ -1,204 +1,550 @@
 /* ========================================================
-   Team Page Styles — Editorial Directory
+   Team Page Styles — Editorial Creators Diamond & Directory
    ======================================================== */
 
 .team {
   background: var(--color-parchment);
 }
 
-.team__intro-box {
-  max-width: 860px;
-  margin: 0 auto var(--space-2xl);
-  padding: var(--space-xl) var(--space-2xl);
-  border-left: 4px solid var(--color-brown-dark);
-}
-
-.team__intro-box p {
-  font-size: 0.98rem;
-  line-height: 1.8;
-  color: var(--color-charcoal);
-  margin-bottom: var(--space-md);
-}
-
-.team__permission-notice {
-  display: block;
-  font-size: 0.88rem;
-  color: var(--color-brown);
-  border-top: var(--border-thin);
-  padding-top: var(--space-sm);
-}
-
-.team__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--space-xl);
-  margin-bottom: var(--space-3xl);
-}
-
-.team__member-card {
-  padding: var(--space-xl);
+/* ── Parchment Paper Header (matching Sections of Western Art & Reflection) ── */
+.team__header {
   display: flex;
-  flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  border: var(--border-thin);
-  background: var(--color-ivory);
+  justify-content: center;
+  margin-bottom: clamp(34px, 5.5vh, 56px);
+  width: 100%;
 }
 
-.team__member-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-medium);
-  border-color: var(--color-brown);
-}
-
-.team__avatar-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-lg);
-  padding-bottom: var(--space-md);
-  border-bottom: var(--border-thin);
-}
-
-.team__avatar-placeholder {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--color-cream);
-  border: 2px solid var(--color-brown-dark);
+.team__paper-pad {
+  position: relative;
+  width: min(780px, 100%);
+  min-height: 140px;
+  border-radius: 14px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  box-shadow: inset 0 2px 6px rgba(92, 74, 58, 0.15);
-}
-
-.team__avatar-initials {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--color-brown-dark);
-}
-
-.team__avatar-ring {
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  border: 1px dashed rgba(92, 74, 58, 0.3);
-}
-
-.team__member-tag {
-  font-size: 0.72rem;
-  background: var(--color-cream);
-  padding: 4px 10px;
-  border-radius: 12px;
-  color: var(--color-brown-dark);
-}
-
-.team__member-name {
-  font-size: 1.25rem;
-  color: var(--color-ink);
-  margin-bottom: 2px;
-}
-
-.team__member-role {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-brown);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-md);
-}
-
-.team__member-contribution {
-  font-size: 0.88rem;
-  line-height: 1.7;
-  color: var(--color-charcoal);
-  margin: 0;
-}
-
-/* Instructor Section */
-.team__instructor-wrapper {
-  max-width: 860px;
+  padding: clamp(22px, 3.2vw, 34px) clamp(24px, 4vw, 56px);
+  background: #fdfbf7;
+  box-shadow: 
+    0 12px 32px rgba(35, 24, 14, 0.15),
+    0 2px 6px rgba(35, 24, 14, 0.08),
+    inset 0 0 35px rgba(139, 115, 85, 0.14);
+  border: 1px solid rgba(139, 115, 85, 0.35);
   margin: 0 auto;
 }
 
+.team__paper-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  opacity: 0.94;
+  mix-blend-mode: multiply;
+}
+
+.team__paper-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 252, 246, 0.88) 35%, rgba(246, 238, 224, 0.65) 100%);
+  pointer-events: none;
+}
+
+.team__header-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.team__header-content .section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 700;
+  color: #1a120c;
+  margin: 0 0 8px 0 !important;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  text-indent: 0 !important;
+  text-align: center !important;
+  text-align-last: center !important;
+  width: 100%;
+}
+
+.team__header-content .section-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.88rem, 1.25vw, 1rem);
+  color: #5a4838;
+  font-weight: 450;
+  margin: 0 auto 10px !important;
+  max-width: 640px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-indent: 0 !important;
+  text-align: center !important;
+  text-align-last: center !important;
+  width: 100%;
+  display: block;
+}
+
+.team__header-content .section-divider {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-brown), transparent);
+  margin: 4px auto 0 !important;
+}
+
+/* ── Diamond Layout Stage ── */
+.team__diamond-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 2.8vw, 30px);
+  max-width: 1120px;
+  margin: 0 auto clamp(40px, 6vh, 64px);
+  position: relative;
+  padding: 20px 0;
+}
+
+.team__diamond-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(16px, 2.6vw, 34px);
+  width: 100%;
+  position: relative;
+}
+
+/* ── Creator Cards ── */
+.team__creator-card {
+  width: clamp(240px, 27vw, 295px);
+  max-width: 295px !important;
+  padding: 24px 18px 22px;
+  border-radius: 12px;
+  background: var(--color-ivory);
+  border: 1px solid rgba(139, 115, 85, 0.24);
+  box-shadow: 
+    0 4px 16px rgba(42, 36, 32, 0.06),
+    0 1px 3px rgba(42, 36, 32, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+}
+
+.team__creator-card:hover {
+  box-shadow: 0 12px 28px rgba(42, 36, 32, 0.12);
+  border-color: rgba(139, 115, 85, 0.45);
+}
+
+/* Prevent .paper-card:hover from resetting diamond transforms */
+.team__diamond-stage .paper-card:hover {
+  transform: unset;
+}
+
+/* Normal cards hover */
+.team__creator-card:not(.team__creator-card--apex-top):not(.team__creator-card--apex-bottom):not(.team__creator-card--lead):not(.team__creator-card--side-left):not(.team__creator-card--side-right):hover {
+  transform: translateY(-5px) !important;
+}
+
+/* ── TOP TIER: Marian & Kerstine brought down further toward center ── */
+.team__diamond-row--top .team__creator-card--side-left.visible,
+.team__diamond-row--top .team__creator-card--side-right.visible {
+  transform: translateY(54px);
+}
+.team__diamond-row--top .team__creator-card--side-left:not(.visible),
+.team__diamond-row--top .team__creator-card--side-right:not(.visible) {
+  transform: translateY(82px);
+  opacity: 0;
+}
+.team__diamond-row--top .team__creator-card--side-left:hover,
+.team__diamond-row--top .team__creator-card--side-right:hover {
+  transform: translateY(48px) !important;
+}
+
+/* ── APEX TOP (Ruby): Sticks up to form diamond top edge ── */
+.team__creator-card--apex-top.visible {
+  transform: translateY(-24px);
+}
+.team__creator-card--apex-top:not(.visible) {
+  transform: translateY(4px);
+  opacity: 0;
+}
+.team__creator-card--apex-top:hover {
+  transform: translateY(-30px) !important;
+}
+
+/* ── BOTTOM TIER: Sam & Ann brought up further toward center ── */
+.team__diamond-row--bottom .team__creator-card--side-left.visible,
+.team__diamond-row--bottom .team__creator-card--side-right.visible {
+  transform: translateY(-54px);
+}
+.team__diamond-row--bottom .team__creator-card--side-left:not(.visible),
+.team__diamond-row--bottom .team__creator-card--side-right:not(.visible) {
+  transform: translateY(-26px);
+  opacity: 0;
+}
+.team__diamond-row--bottom .team__creator-card--side-left:hover,
+.team__diamond-row--bottom .team__creator-card--side-right:hover {
+  transform: translateY(-60px) !important;
+}
+
+/* ── APEX BOTTOM (Robert): Sticks down to form diamond bottom edge ── */
+.team__creator-card--apex-bottom.visible {
+  transform: translateY(24px);
+}
+.team__creator-card--apex-bottom:not(.visible) {
+  transform: translateY(52px);
+  opacity: 0;
+}
+.team__creator-card--apex-bottom:hover {
+  transform: translateY(18px) !important;
+}
+
+/* ── CENTER LEAD (Gab): Balanced & proportionate center ── */
+.team__creator-card--lead {
+  width: clamp(240px, 27vw, 295px);
+  max-width: 295px !important;
+  padding: 24px 18px 22px;
+  background: var(--color-ivory);
+  border: 1px solid rgba(139, 115, 85, 0.35);
+  box-shadow: 
+    0 4px 16px rgba(42, 36, 32, 0.08),
+    0 1px 3px rgba(42, 36, 32, 0.04);
+  z-index: 3;
+}
+
+.team__creator-card--lead:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 12px 28px rgba(42, 36, 32, 0.12);
+  border-color: rgba(139, 115, 85, 0.45);
+}
+
+/* Portrait photo styling — hardened with !important to prevent global img overrides */
+.team__creator-portrait-wrap {
+  width: 78px !important;
+  height: 78px !important;
+  min-width: 78px !important;
+  max-width: 78px !important;
+  min-height: 78px !important;
+  max-height: 78px !important;
+  border-radius: 50% !important;
+  margin: 0 auto 14px !important;
+  overflow: hidden !important;
+  border: 2px solid rgba(92, 74, 58, 0.35);
+  box-shadow: 0 3px 10px rgba(42, 36, 32, 0.12);
+  background: var(--color-cream);
+  flex-shrink: 0 !important;
+}
+
+.team__creator-portrait-wrap--lead {
+  width: 78px !important;
+  height: 78px !important;
+  min-width: 78px !important;
+  max-width: 78px !important;
+  min-height: 78px !important;
+  max-height: 78px !important;
+  border: 2px solid #6b523b;
+  box-shadow: 0 3px 10px rgba(42, 36, 32, 0.12);
+  margin-bottom: 14px !important;
+}
+
+.team__creator-photo {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border-radius: 50% !important;
+}
+
+.team__creator-photo--lead {
+  border: none;
+}
+
+/* Info typography */
+.team__creator-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.team__creator-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1.4vw, 1.18rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 0 0 6px;
+  line-height: 1.25;
+  text-align: center;
+  word-break: normal;
+}
+
+.team__creator-name--lead {
+  font-size: clamp(1.08rem, 1.45vw, 1.22rem);
+  color: #1a120c;
+  margin-bottom: 3px;
+}
+
+.team__creator-role-title {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #7a5e43;
+  margin-bottom: 8px;
+}
+
+.team__creator-desc {
+  font-size: 0.85rem;
+  color: #5c4e42;
+  line-height: 1.5;
+  margin: 0;
+  text-indent: 0 !important;
+  text-align: center;
+}
+
+.team__creator-desc--lead {
+  font-size: 0.85rem;
+  color: #5c4e42;
+  font-weight: 450;
+}
+
+/* ── Instructor Section — Formal Academic Card ── */
+.team__instructor-wrapper {
+  max-width: 780px;
+  margin: clamp(40px, 6vh, 60px) auto 0;
+}
+
 .team__instructor-card {
-  padding: var(--space-2xl);
+  padding: clamp(28px, 4vw, 44px);
   border: var(--border-medium);
   background: var(--color-ivory);
   box-shadow: var(--shadow-medium);
-  border-top: 4px solid var(--color-accent-gold);
+  border-top: 3px solid var(--color-brown-dark);
+  border-radius: 4px;
 }
 
-.team__instructor-badge {
-  margin-bottom: var(--space-md);
+.team__instructor-header {
+  margin-bottom: clamp(18px, 2.5vw, 28px);
+}
+
+.team__instructor-header .plate-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--color-brown-dark);
+  font-weight: 700;
+}
+
+.team__instructor-divider {
+  width: 48px;
+  height: 2px;
+  background: var(--color-brown-dark);
+  margin-top: 10px;
 }
 
 .team__instructor-body {
   display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: var(--space-xl);
-  align-items: center;
+  grid-template-columns: auto 1fr;
+  gap: clamp(24px, 3vw, 40px);
+  align-items: start;
 }
 
-.team__instructor-avatar {
+/* Instructor Portrait */
+.team__instructor-portrait {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  text-align: center;
 }
 
-.team__instructor-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+.team__instructor-photo-wrap {
+  width: 130px !important;
+  height: 160px !important;
+  min-width: 130px !important;
+  max-width: 130px !important;
+  min-height: 160px !important;
+  max-height: 160px !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  border: 2px solid var(--color-brown-dark);
+  box-shadow: 0 4px 16px rgba(42, 36, 32, 0.14);
   background: var(--color-cream);
-  border: 2px solid var(--color-accent-gold);
+  flex-shrink: 0 !important;
+}
+
+.team__instructor-photo {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+  border-radius: 4px !important;
+}
+
+/* Instructor Details */
+.team__instructor-details {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  font-size: 2.2rem;
+}
+
+.team__instructor-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 0 0 4px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .team__instructor-title {
-  font-size: 1.4rem;
-  color: var(--color-ink);
-  margin-bottom: 4px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-brown-dark);
+  margin: 0 0 2px;
+  text-indent: 0;
+  text-align: left;
+  line-height: 1.5;
 }
 
 .team__instructor-dept {
-  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
   color: var(--color-brown);
-  margin-bottom: var(--space-md);
+  margin: 0 0 clamp(12px, 1.5vw, 18px);
+  text-indent: 0;
+  text-align: left;
+  line-height: 1.5;
+  font-weight: 450;
 }
 
-.team__instructor-note {
+.team__instructor-course-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
   background: var(--color-cream);
-  padding: var(--space-md) var(--space-lg);
-  border-radius: 4px;
-  border-left: 3px solid var(--color-accent-gold);
+  border-left: 3px solid var(--color-brown-dark);
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 10px;
 }
 
-.team__instructor-note p {
-  font-size: 0.86rem;
-  line-height: 1.6;
-  color: var(--color-charcoal);
+.team__instructor-course-label {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: 0.01em;
+}
+
+.team__instructor-course-code {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-brown);
+  background: rgba(92, 74, 58, 0.08);
+  padding: 3px 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(92, 74, 58, 0.15);
+}
+
+.team__instructor-eval {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-brown);
+  text-indent: 0;
+  text-align: left;
   margin: 0;
+  font-weight: 450;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+/* ── Responsive Behavior ── */
+@media (max-width: 880px) {
+  .team__diamond-row {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  
+  .team__creator-card--apex-top.visible,
+  .team__creator-card--apex-top:not(.visible),
+  .team__creator-card--apex-bottom.visible,
+  .team__creator-card--apex-bottom:not(.visible),
+  .team__diamond-row--top .team__creator-card--side-left.visible,
+  .team__diamond-row--top .team__creator-card--side-left:not(.visible),
+  .team__diamond-row--top .team__creator-card--side-right.visible,
+  .team__diamond-row--top .team__creator-card--side-right:not(.visible),
+  .team__diamond-row--bottom .team__creator-card--side-left.visible,
+  .team__diamond-row--bottom .team__creator-card--side-left:not(.visible),
+  .team__diamond-row--bottom .team__creator-card--side-right.visible,
+  .team__diamond-row--bottom .team__creator-card--side-right:not(.visible) {
+    transform: none !important;
+    margin: 0;
+  }
+
+  .team__creator-card {
+    width: clamp(210px, calc(50% - 14px), 260px);
+  }
+
+  .team__creator-card--lead {
+    width: min(295px, 100%);
+    order: -1;
+  }
 }
 
 @media (max-width: 768px) {
-  .team__grid {
-    grid-template-columns: 1fr;
-  }
   .team__instructor-body {
     grid-template-columns: 1fr;
     text-align: center;
   }
-  .team__instructor-avatar {
+  .team__instructor-portrait {
     margin: 0 auto;
+  }
+  .team__instructor-details {
+    align-items: center;
+  }
+  .team__instructor-title,
+  .team__instructor-dept {
+    text-align: center;
+  }
+  .team__instructor-course-bar {
+    justify-content: center;
+    border-left: none;
+    border-top: 3px solid var(--color-brown-dark);
+    border-radius: 0 0 4px 4px;
+  }
+  .team__instructor-eval {
+    text-align: center;
   }
   .team__instructor-card {
     padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 520px) {
+  .team__creator-card {
+    width: min(280px, calc(100% - 24px)) !important;
+    max-width: 320px !important;
   }
 }

@@ -3,169 +3,416 @@
   padding-top: var(--nav-height);
 }
 
-.home__hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3xl);
+/* Sole Cover Landing Mode: Initial state where only the book cover is visible */
+.home--sole-cover {
+  min-height: 100vh;
+  padding: clamp(20px, 4vh, 40px) 0;
+  display: flex;
   align-items: center;
-  max-width: var(--max-width);
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.home__sole-cover-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(1020px, calc(100vw - 32px));
   margin: 0 auto;
-  padding: var(--space-3xl) var(--space-xl);
-  min-height: calc(100vh - var(--nav-height));
+  perspective: 1800px;
 }
 
-.home__badge {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-brown);
-  background: var(--color-warm-beige);
-  padding: 4px 14px;
-  border-radius: 20px;
-  margin-bottom: var(--space-lg);
+/* The single visible cover (right leaf) is centered before opening. */
+.home--sole-cover .sketchbook-modal__overlay--homepage {
+  width: 100%;
+  transform: translateX(-25%);
+  transform-style: preserve-3d;
 }
 
-.home__title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 1.05;
-  margin-bottom: var(--space-md);
-}
-.home__title-line { display: block; }
-.home__title-accent {
-  font-style: italic;
-  color: var(--color-brown-dark);
+.home--sole-cover .sketchbook-modal__overlay--cover-opening {
+  animation: centerBookSpread 2000ms cubic-bezier(0.42, 0, 0.24, 1) forwards;
 }
 
-.home__subtitle {
-  font-size: 1.3rem;
-  margin-bottom: var(--space-lg);
-  color: var(--color-brown);
+@keyframes centerBookSpread {
+  from { transform: translateX(-25%); }
+  to { transform: translateX(0); }
 }
 
-.home__intro {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: var(--color-charcoal);
-  margin-bottom: var(--space-xl);
-  max-width: 520px;
+@media (max-width: 767px) {
+  .home--sole-cover .sketchbook-modal__overlay--homepage {
+    transform: none;
+  }
+
+  .home--sole-cover .sketchbook-modal__overlay--cover-opening {
+    animation: none;
+    transform: none;
+  }
+}
+
+.home__book-stage {
+  width: min(1500px, 100%);
+  margin: 0 auto;
+  padding: clamp(18px, 3.5vh, 42px) clamp(20px, 4vw, 64px) 28px;
+}
+
+.home__open-book-wrap {
+  width: 100%;
+  /* The cover flip already reveals these pages; a second entrance fade would flash them away. */
+  animation: none;
 }
 
 .home__cta-group {
   display: flex;
-  gap: var(--space-md);
+  justify-content: center;
+  gap: 14px;
   flex-wrap: wrap;
+  padding: 22px 0 6px;
+  animation: ctaFadeIn 0.8s ease both;
+}
+
+@keyframes ctaFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .home__cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.25s ease;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 11px 25px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 0.92rem;
+  font-weight: 650;
   letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
+
 .home__cta--primary {
-  background: var(--color-brown-dark);
-  color: var(--color-ivory);
+  background: #503a26;
+  color: #faf7f0;
+  border: 1px solid rgba(139, 115, 85, 0.4);
+  box-shadow: 0 7px 20px rgba(50, 34, 18, 0.22);
 }
+
 .home__cta--primary:hover {
-  background: var(--color-ink);
-  color: var(--color-ivory);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
+  background: #6a492e;
+  color: #ffffff;
+  border-color: #8c6a43;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(50, 34, 18, 0.32);
 }
+
 .home__cta--secondary {
-  border: 1.5px solid var(--color-brown-dark);
-  color: var(--color-brown-dark);
+  border-color: rgba(91, 65, 38, 0.35);
+  color: #503a26;
+  background: rgba(251, 247, 239, 0.88);
+  box-shadow: 0 4px 14px rgba(50, 34, 18, 0.08);
 }
+
 .home__cta--secondary:hover {
-  background: var(--color-brown-dark);
-  color: var(--color-ivory);
+  background: #f5ede1;
+  color: #3b2816;
+  border-color: #6a492e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(50, 34, 18, 0.14);
 }
 
-/* Sketchbook visual */
-.home__sketchbook {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  background: var(--color-ivory);
-  border: var(--border-medium);
-  border-radius: 4px;
-  padding: var(--space-lg);
-  box-shadow: var(--shadow-lifted);
-  position: relative;
-}
-.home__sketchbook::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  background: rgba(92, 74, 58, 0.15);
-  transform: translateX(-50%);
-}
-
-.home__sketch-page {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-.home__sketch-page img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 2px;
-  border: 1px solid rgba(92, 74, 58, 0.1);
-}
-.home__sketch-caption {
-  font-size: 0.85rem;
-  text-align: center;
-}
-
-/* Period preview grid */
+/* ── Periods Section ("Sections of Western Art") ── */
 .home__periods {
-  padding: var(--space-3xl) var(--space-xl);
+  scroll-margin-top: calc(var(--nav-height, 70px) + 20px);
+  width: min(1500px, 100%);
+  margin: 32px auto 56px;
+  padding: clamp(40px, 5vh, 64px) clamp(18px, 3vw, 48px);
+  background: rgba(249, 245, 237, 0.88);
+  border-radius: 20px;
+  border: 1px solid rgba(139, 115, 85, 0.28);
+  box-shadow: 
+    0 16px 44px rgba(35, 24, 14, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-sizing: border-box;
 }
+
+/* Header Container */
+.home__periods-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: clamp(28px, 4.5vh, 44px);
+}
+
+/* Parchment Paper Pad (Uses uploaded parchment-paper.avif as backing/padding) */
+.home__periods-paper-pad {
+  position: relative;
+  width: min(780px, 100%);
+  min-height: 190px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(28px, 4.5vw, 42px) clamp(24px, 4vw, 56px);
+  background: #fdfbf7;
+  box-shadow: 
+    0 12px 32px rgba(35, 24, 14, 0.15),
+    0 2px 6px rgba(35, 24, 14, 0.08),
+    inset 0 0 35px rgba(139, 115, 85, 0.14);
+  border: 1px solid rgba(139, 115, 85, 0.35);
+}
+
+/* The actual uploaded parchment paper illustration */
+.home__periods-paper-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  opacity: 0.94;
+  mix-blend-mode: multiply;
+}
+
+/* Soft ambient inner illumination ensuring 100% text contrast & visibility */
+.home__periods-paper-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 252, 246, 0.88) 35%, rgba(246, 238, 224, 0.65) 100%);
+  pointer-events: none;
+}
+
+.home__periods-header-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  width: 100%;
+}
+
+.home__periods-header-content .section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3.3vw, 2.5rem);
+  font-weight: 700;
+  color: #1a120c;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.home__periods-header-content .section-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.92rem, 1.35vw, 1.05rem);
+  color: #5a4838;
+  font-weight: 450;
+  margin: 0 auto 12px;
+  max-width: 640px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  text-shadow: none;
+}
+
+.home__periods-header-content .section-divider {
+  width: 110px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #8b7355, transparent);
+  margin: 8px auto 0;
+}
+
+/* ── Exact 5-Column Period Grid ── */
 .home__period-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--space-lg);
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(12px, 1.3vw, 20px);
+  align-items: stretch;
 }
+
+/* ── Individual Period Card (Picture 2 Design Reference) ── */
 .home__period-card {
-  text-align: center;
-  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fbfaf6;
+  border: 1px solid rgba(139, 115, 85, 0.22);
+  box-shadow: 0 6px 20px rgba(42, 36, 32, 0.08);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+  cursor: pointer;
+  text-align: left;
 }
-.home__period-icon {
-  font-size: 2rem;
+
+.home__period-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 16px 36px rgba(42, 36, 32, 0.16);
+  border-color: rgba(139, 115, 85, 0.45);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease !important;
+}
+
+/* Upper Part: ONLY THE PICTURE */
+.home__period-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  background: #241e1a;
+  flex-shrink: 0;
+}
+
+.home__period-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
-  margin-bottom: var(--space-sm);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.home__period-card h3 {
-  font-size: 1.05rem;
-  margin-bottom: var(--space-xs);
+
+.home__period-card:hover .home__period-img {
+  transform: scale(1.08);
 }
-.home__period-card p {
-  font-size: 0.85rem;
-  color: var(--color-brown);
-  margin: 0;
+
+.home__period-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 65%, rgba(36, 30, 26, 0.25) 100%);
+  pointer-events: none;
+}
+
+/* Underneath of the picture: THE PADDING WITH ITS TITLE */
+.home__period-body {
+  padding: 14px 15px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #fbfaf6;
+}
+
+.home__period-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.home__period-meta .plate-label {
+  font-size: 0.65rem;
+  color: #8c6a43;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.home__period-meta .annotation {
+  font-size: 0.72rem;
+  color: #7d6b59;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home__period-title {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #251b13;
+  margin: 0 0 6px 0;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+}
+
+.home__period-card:hover .home__period-title {
+  color: #765536;
+}
+
+.home__period-desc {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #554433;
+  margin: 0 0 12px 0;
+  flex: 1;
+  text-indent: 0;
+  text-align: left;
+}
+
+.home__period-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(139, 115, 85, 0.2);
+}
+
+.home__period-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #765536;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.home__period-card:hover .home__period-link {
+  color: #385a78;
+  transform: translateX(3px);
+}
+
+/* ── Responsive Breakpoints ── */
+@media (max-width: 1080px) {
+  .home__period-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  .home__period-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .home__periods {
+    padding: 30px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home__period-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .home__period-img-wrap {
+    height: 160px;
+  }
+  .home__periods-paper-pad {
+    padding: 22px 16px;
+  }
 }
 
 @media (max-width: 768px) {
-  .home__hero {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
-    min-height: auto;
-    padding-top: var(--space-xl);
+  .home__book-stage {
+    padding: 14px 12px 24px;
   }
-  .home__hero-visual { order: -1; }
-  .home__sketchbook { padding: var(--space-md); }
-  .home__sketch-page img { height: 140px; }
-  .home__title { font-size: clamp(2rem, 8vw, 3rem); }
+
+  .home__cta-group {
+    padding-top: 18px;
+  }
+
+  .home__cta {
+    flex: 1 1 180px;
+  }
 }

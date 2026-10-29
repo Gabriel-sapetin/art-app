@@ -13,81 +13,76 @@ main {
   flex: 1;
 }
 
-/* ── Floating Tactile Sketchbook Quick Button ── */
-.sketchbook-floating-pill-wrap {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 1000;
+/* Keep the fixed Renaissance image visible between sections while text cards stay opaque. */
+.app > main > section {
+  background: transparent;
 }
 
-.sketchbook-floating-pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 22px;
-  background: var(--color-brown-dark);
-  color: var(--color-ivory);
-  border: 1.5px solid var(--color-accent-gold);
-  border-radius: 30px;
-  box-shadow: 0 8px 24px rgba(42, 36, 32, 0.35);
+.app > main > section > .container > .section-header-box,
+.section-header-box {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto clamp(24px, 4vw, 42px);
+  padding: 16px clamp(20px, 3vw, 36px) 14px;
+  border: 1px solid rgba(92, 74, 58, 0.18);
+  border-radius: 5px;
+  background: rgba(250, 247, 240, 0.94);
+  box-shadow: 0 8px 22px rgba(42, 36, 32, 0.1);
+  text-align: center;
+}
+
+/* Navbar slide-in animation when book opens */
+.navbar--slide-in {
+  animation: navbarSlideDown 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes navbarSlideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Revealed content fade and slide-up animation */
+.app__revealed-content {
+  animation: contentReveal 0.95s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes contentReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer__link-btn {
+  background: none;
+  border: none;
+  color: var(--color-parchment);
+  opacity: 0.75;
+  font-family: inherit;
+  font-size: 0.88rem;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  font-family: var(--font-body);
+  padding: 0;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  text-align: left;
 }
 
-.sketchbook-floating-pill:hover {
-  background: var(--color-ink);
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 12px 32px rgba(42, 36, 32, 0.45);
-}
-
-.sketchbook-floating-pill__icon {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
-.sketchbook-floating-pill__label {
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-}
-
-/* ── Sketchbook Banner Strip ── */
-.sketchbook-banner-strip {
-  background: var(--color-cream);
-  border-top: var(--border-thin);
-  border-bottom: var(--border-thin);
-  padding: var(--space-xl) 0;
-}
-
-.sketchbook-banner-strip__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-xl);
-}
-
-.sketchbook-banner-strip__text h3 {
-  font-size: 1.5rem;
-  margin: 4px 0 6px;
-  color: var(--color-ink);
-}
-
-.sketchbook-banner-strip__text p {
-  font-size: 0.95rem;
-  color: var(--color-brown-dark);
-  margin: 0;
-  max-width: 640px;
-  line-height: 1.6;
-}
-
-.sketchbook-banner-strip__btn {
-  white-space: nowrap;
-  padding: 12px 26px;
-  font-size: 0.92rem;
-  box-shadow: var(--shadow-soft);
+.footer__link-btn:hover {
+  opacity: 1;
+  color: #fce4a6;
+  text-decoration: underline;
 }
 
 /* ── Back to Top Button ── */
@@ -161,10 +156,11 @@ main {
 
 .footer__desc {
   font-size: 0.88rem;
-  line-height: 1.7;
-  color: rgba(245, 240, 232, 0.7);
-  margin-bottom: var(--space-md);
-  max-width: 420px;
+  line-height: 1.6;
+  color: rgba(250, 247, 240, 0.65);
+  margin-bottom: var(--space-lg);
+  text-indent: 0;
+  text-align: left;
 }
 
 .footer__group {
@@ -209,18 +205,17 @@ main {
 }
 
 .footer__copy {
-  font-size: 0.75rem;
-  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.8rem;
+  color: rgba(250, 247, 240, 0.45);
+  margin: 0;
+  text-indent: 0;
+  text-align: left;
 }
 
 /* Responsive Footer */
 @media (max-width: 900px) {
   .footer__inner {
     grid-template-columns: 1fr 1fr;
-  }
-  .sketchbook-banner-strip__inner {
-    flex-direction: column;
-    align-items: flex-start;
   }
 }
 
@@ -231,15 +226,5 @@ main {
   .footer__bottom-inner {
     flex-direction: column;
     text-align: center;
-  }
-  .sketchbook-floating-pill-wrap {
-    bottom: 16px;
-    right: 16px;
-  }
-  .sketchbook-floating-pill {
-    padding: 10px 16px;
-  }
-  .sketchbook-floating-pill__label {
-    font-size: 0.85rem;
   }
 }

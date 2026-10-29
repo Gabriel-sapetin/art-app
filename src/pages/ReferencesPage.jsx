@@ -1,4 +1,5 @@
 import { useInView } from '../hooks/useInView';
+import CommentsSection from './CommentsSection';
 import './ReferencesPage.css';
 
 export const academicCitations = [
@@ -32,97 +33,17 @@ export const academicCitations = [
   }
 ];
 
-export const imageAttributions = [
-  {
-    subject: "El Castillo Cave Paintings (Hand stencils, disks, claviforms)",
-    source: "Cave of El Castillo, Puente Viesgo, Cantabria, Spain / Wikimedia Commons",
-    license: "Public Domain / Educational fair use for instructional evaluation"
-  },
-  {
-    subject: "Donatello (Donato di Niccolò di Betto Bardi) Portrait & Bronze Works",
-    source: "Galleria degli Uffizi & Museo Nazionale del Bargello, Florence, Italy",
-    license: "Public Domain (Artworks predate 1928 / PD-Art)"
-  },
-  {
-    subject: "Giotto di Bondone — Fresco Details (Scrovegni Chapel)",
-    source: "Cappella degli Scrovegni, Padua, Italy / Wikimedia Commons",
-    license: "Public Domain (Created c. 1305 / PD-Art)"
-  },
-  {
-    subject: "Leon Battista Alberti Portrait & Architectural Ensembles",
-    source: "Palazzo Rucellai & Santa Maria Novella Archives, Florence",
-    license: "Public Domain (PD-Art)"
-  },
-  {
-    subject: "Giovanni Cimabue — Maestà & Crucifix Details",
-    source: "Basilica of San Francesco, Assisi & Uffizi Gallery, Florence",
-    license: "Public Domain (Created c. 1280–1290 / PD-Art)"
-  },
-  {
-    subject: "Filippo Brunelleschi — Portrait & Florence Cathedral Dome",
-    source: "Opera di Santa Maria del Fiore, Florence, Italy",
-    license: "Public Domain (Created 1420–1436 / PD-Art)"
-  },
-  {
-    subject: "Fra Angelico — Annunciation & San Marco Frescoes",
-    source: "Museo di San Marco, Florence, Italy",
-    license: "Public Domain (Created c. 1440–1442 / PD-Art)"
-  },
-  {
-    subject: "Lorenzo Ghiberti — Gates of Paradise (Florence Baptistery)",
-    source: "Battistero di San Giovanni, Florence / Museo dell'Opera del Duomo",
-    license: "Public Domain (Created 1425–1452 / PD-Art)"
-  },
-  {
-    subject: "The Bayeux Tapestry (Embroidery on Linen)",
-    source: "Musée de la Tapisserie de Bayeux, Normandy, France",
-    license: "Public Domain (Created c. 1070s / PD-Art)"
-  },
-  {
-    subject: "The Pitsa Panel (Painted Archaic Wood)",
-    source: "National Archaeological Museum, Athens, Greece",
-    license: "Public Domain (Created c. 540–530 BCE / PD-Old-100)"
-  },
-  {
-    subject: "Classical Greek Vessels (Krater, Lebes Gamikos, Lekanis, Pelike)",
-    source: "The British Museum & The Metropolitan Museum of Art Open Access",
-    license: "Creative Commons Zero (CC0) / Public Domain"
-  },
-  {
-    subject: "Paleolithic Stone Tools (Acheulean Hand Axe, Blade & Flake Tools)",
-    source: "Olduvai Gorge Archaeological Repository / Wikimedia Commons",
-    license: "Creative Commons Attribution-ShareAlike (CC BY-SA 4.0)"
-  }
-];
-
 export default function ReferencesPage() {
-  const [headerRef, headerVisible] = useInView();
+  const [sec1Ref, sec1Visible] = useInView({ threshold: 0.05 });
 
   return (
+    <>
     <section id="references" className="references section">
       <div className="container">
-        <div ref={headerRef} className={`fade-in ${headerVisible ? 'visible' : ''}`}>
-          <h2 className="section-title">References and Image Credits</h2>
-          <p className="section-subtitle">Scholarly bibliography, curriculum alignment, and archival licensing documentation</p>
-          <div className="section-divider" />
-        </div>
-
-        {/* Curriculum Alignment Notice */}
-        <div className="references__banner paper-card">
-          <div className="references__banner-badge">
-            <span className="plate-label">Academic Integrity & Alignment</span>
-          </div>
-          <h4>Curricular Alignment Statement</h4>
-          <p>
-            In strict compliance with the midterm project requirements for Art Appreciation, this interactive digital sketchbook is anchored directly in <strong>Module 3: The Western Art History</strong> provided by our instructor. All historical explanations, terminology definitions (such as lithic reduction, claviforms, polychromy, and the Italo-Byzantine tradition), artist biographies, and pottery classifications have been synthesized and re-explained in our own words to demonstrate comprehensive student understanding.
-          </p>
-        </div>
-
-        {/* APA 7th Edition Citations */}
-        <div className="references__section-block">
+        {/* Academic Bibliography */}
+        <div ref={sec1Ref} className={`references__section-block scroll-ease-in ${sec1Visible ? 'visible' : ''}`} style={{ transitionDelay: '0.04s' }}>
           <h3 className="references__section-title">
-            <span className="plate-label">Section I</span>
-            Academic Bibliography (APA 7th Edition)
+            Academic Bibliography
           </h3>
           <div className="references__citations-list paper-card">
             {academicCitations.map((item, index) => (
@@ -133,47 +54,11 @@ export default function ReferencesPage() {
             ))}
           </div>
         </div>
-
-        {/* Visual Material Attributions & Licensing */}
-        <div className="references__section-block">
-          <h3 className="references__section-title">
-            <span className="plate-label">Section II</span>
-            Curated Visual Material & Image Rights
-          </h3>
-          <div className="references__credits-table-wrap paper-card">
-            <table className="references__table">
-              <thead>
-                <tr>
-                  <th scope="col">Artwork / Historical Artifact</th>
-                  <th scope="col">Curatorial Archive / Source</th>
-                  <th scope="col">Licensing / Copyright Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {imageAttributions.map((row, i) => (
-                  <tr key={i}>
-                    <td className="references__table-subject">
-                      <strong>{row.subject}</strong>
-                    </td>
-                    <td className="references__table-source">{row.source}</td>
-                    <td className="references__table-license">
-                      <span className="references__license-pill">{row.license}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Original Creative Work Notice */}
-        <div className="references__originality paper-card">
-          <h4>Original Creative Contributions</h4>
-          <p>
-            The website identity <strong>Atelier Occidental</strong>, editorial layout, interactive ThreeUI-inspired tactile sketchbook viewer, dynamic magnifying loupe component, quiz and matching game design, educational synthesis diagrams, and student reflections are the original creative outputs of <strong>Group 3</strong> for the Midterm Project in Art Appreciation (October 2026).
-          </p>
-        </div>
       </div>
     </section>
+
+    <CommentsSection />
+  </>
   );
 }
+

@@ -164,7 +164,7 @@ export const artworks = [
     artist: "Medieval Heralds and Artisans",
     date: "c. 12th century CE onward",
     period: "Medieval",
-    medium: "Various — cloth, painted wood, stone, glass, metalwork",
+    medium: "Various: cloth, painted wood, stone, glass, metalwork",
     image: "/assets/heraldry.jpg",
     description: "Heraldry is the system and art of designing coats of arms and identifying emblems for families, institutions, and kingdoms. These designs combined symbolic animals, geometric patterns, colors, and mottos to create instantly recognizable visual identities.",
     significance: "Heraldry developed a sophisticated visual language that influenced art, architecture, and design across medieval Europe, and its principles of visual identity remain influential today.",

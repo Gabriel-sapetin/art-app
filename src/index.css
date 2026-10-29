@@ -75,7 +75,14 @@ body::before {
   background-image:
     radial-gradient(ellipse at 20% 50%, rgba(200, 180, 150, 0.1) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(180, 160, 130, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(190, 170, 140, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse at 50% 80%, rgba(190, 170, 140, 0.06) 0%, transparent 50%),
+    linear-gradient(rgba(52, 101, 151, 0.32), rgba(52, 101, 151, 0.32)),
+    linear-gradient(rgba(245, 240, 232, 0.44), rgba(245, 240, 232, 0.44)),
+    url('/assets/renaissance-page-watermark.jpg');
+  background-size: auto, auto, auto, 100% 100%, 100% 100%, cover;
+  background-position: center, center, center, center, center, center bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   pointer-events: none;
   z-index: 0;
 }
@@ -98,7 +105,15 @@ h2 { font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: 600; }
 h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 600; }
 h4 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; }
 
-p { margin-bottom: var(--space-md); }
+p {
+  margin-bottom: var(--space-md);
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: left;
+  text-indent: 2rem;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
 
 a {
   color: var(--color-brown-dark);
@@ -133,15 +148,18 @@ button {
 
 .section-title {
   text-align: center;
+  text-align-last: center;
   margin-bottom: var(--space-sm);
   position: relative;
 }
 
 .section-subtitle {
   text-align: center;
+  text-align-last: center;
+  text-indent: 0;
   font-family: var(--font-handwritten);
   font-size: 1.2rem;
-  color: var(--color-brown);
+  color: #385a78;
   margin-bottom: var(--space-2xl);
 }
 
@@ -157,6 +175,7 @@ button {
   font-family: var(--font-handwritten);
   color: var(--color-brown);
   font-size: 1.1rem;
+  text-indent: 0;
 }
 
 /* Paper card */
@@ -183,6 +202,8 @@ button {
   padding-top: var(--space-sm);
   margin-top: var(--space-md);
   font-style: italic;
+  text-indent: 0;
+  text-align: left;
 }
 
 /* Plate number label */
@@ -192,17 +213,30 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--color-brown);
+  text-indent: 0;
+  text-align: left;
 }
 
-/* Scroll-based fade-in animation */
+/* Scroll-based ease-in entrance animations */
+.scroll-ease-in,
 .fade-in {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
+
+.scroll-ease-in.visible,
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* On hover, interactive cards respond instantly without waiting for entrance delay */
+.scroll-ease-in.visible:hover,
+.fade-in.visible:hover {
+  transition-delay: 0s !important;
 }
 
 /* Reduced motion */
@@ -229,6 +263,12 @@ button {
   }
 }
 
+@media (max-width: 480px) {
+  p {
+    text-indent: 1.5rem;
+  }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-cream); }
@@ -237,4 +277,3 @@ button {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-brown); }
-

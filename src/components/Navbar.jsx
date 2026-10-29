@@ -4,16 +4,14 @@ import './Navbar.css';
 const navLinks = [
   { id: 'home', label: 'Home', href: '#home' },
   { id: 'explore', label: 'Explore', href: '#explore' },
-  { id: 'gallery', label: 'Gallery', href: '#gallery' },
   { id: 'artists', label: 'Artists', href: '#artists' },
   { id: 'activities', label: 'Activities', href: '#activities' },
   { id: 'reflection', label: 'Reflection', href: '#reflection' },
   { id: 'team', label: 'Team', href: '#team' },
-  { id: 'comments', label: 'Comments', href: '#comments' },
   { id: 'references', label: 'References', href: '#references' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ className = '' }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -46,13 +44,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
+    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${className}`} role="navigation" aria-label="Main navigation">
       <div className="navbar__inner">
         <a href="#home" className="navbar__logo" onClick={(e) => handleNavClick(e, '#home')}>
-          <span className="navbar__logo-icon">A</span>
+          <img src="/assets/logo-emblem.png" alt="Ochre & Ember Emblem" className="navbar__logo-img" />
           <span className="navbar__logo-text">
-            <span className="navbar__logo-name">Atelier Occidental</span>
-            <span className="navbar__logo-tagline">Western Art History</span>
+            <span className="navbar__logo-name">Ochre & Ember</span>
+            <span className="navbar__logo-tagline">A Journey Through Western Art</span>
           </span>
         </a>
 
@@ -84,4 +82,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
