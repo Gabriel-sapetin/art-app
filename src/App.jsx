@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ExplorePage from './pages/ExplorePage';
 import ArtistsPage from './pages/ArtistsPage';
+import ArtStudioPage from './pages/ArtStudioPage';
 import ActivitiesPage from './pages/ActivitiesPage';
 import ReflectionPage from './pages/ReflectionPage';
 import TeamPage from './pages/TeamPage';
@@ -76,7 +77,10 @@ export default function App() {
             {/* 3. Artist Spotlight: Meet the Masters */}
             <ArtistsPage />
 
-            {/* 4. Interactive Zone: Play, Solve, and Learn */}
+            {/* 4. Art Studio: experiment with historical techniques */}
+            <ArtStudioPage />
+
+            {/* 5. Interactive Zone: Play, Solve, and Learn */}
             <ActivitiesPage />
 
             {/* 5. Art Appreciation Reflection */}
@@ -120,6 +124,7 @@ export default function App() {
                   <h4 className="plate-label">Interactive Modules</h4>
                   <ul className="footer__links">
                     <li><a href="#artists">Master Artists Spotlight</a></li>
+                    <li><a href="#studio">Art Studio Techniques</a></li>
                     <li><a href="#activities">Art History Quiz (10 Items)</a></li>
                     <li><a href="#activities">Match Masters & Definitions</a></li>
                     <li><a href="#activities">Guess Mystery Specimen</a></li>
