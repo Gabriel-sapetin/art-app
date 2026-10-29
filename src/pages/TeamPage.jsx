@@ -42,7 +42,7 @@ export const creators = {
   bottom: [
     {
       id: 'sam',
-      name: 'Sam Dabgate Lipao',
+      name: 'Sam Dangate Lipao',
       role: 'Project Contributor',
       roleDescription: 'Assisted in developing the project',
       photo: '/assets/sam.jpg',
@@ -50,7 +50,7 @@ export const creators = {
     },
     {
       id: 'robert',
-      name: 'Rober Jhon Jorquia',
+      name: 'Robert Jhon Jorquia',
       role: 'Project Contributor',
       roleDescription: 'Assisted in developing the project',
       photo: '/assets/robert.jpg',
