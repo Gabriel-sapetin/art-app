@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import CavePaintingView from './CavePaintingView';
 import { saveLocalArtwork } from '../data/communityArtworks';
 import './ShareArtworkModal.css';
@@ -63,7 +64,7 @@ export default function ShareArtworkModal({
     try {
       localStorage.setItem('ochre_ember_author_name', cleanAuthor);
     } catch {
-      // ignore local storage errors
+      // ignore
     }
 
     const dateFormatted = new Date().toLocaleDateString('en-US', {
@@ -110,7 +111,7 @@ export default function ShareArtworkModal({
         }
       }
     } catch (err) {
-      console.warn('API sync deferred to local storage (e.g. running localhost without serverless proxy):', err);
+      console.warn('API sync deferred to local storage:', err);
     }
 
     setSubmitting(false);
@@ -130,9 +131,15 @@ export default function ShareArtworkModal({
     }, 150);
   };
 
-  return (
-    <div className="share-modal__overlay" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
-      <div className="share-modal__card">
+  const modalContent = (
+    <div
+      className="share-modal__overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="share-modal-title"
+      onClick={onClose}
+    >
+      <div className="share-modal__card" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className="share-modal__close-btn"
@@ -150,63 +157,68 @@ export default function ShareArtworkModal({
               <p className="share-modal__subtitle">Publish your original marks to the public gallery alongside other explorers.</p>
             </div>
 
-            <div className="share-modal__preview-wrapper">
-              <CavePaintingView marks={marks} id="share-preview" />
+            <div className="share-modal__body-grid">
+              {/* Left Column: Compact Live Preview & Badge */}
+              <div className="share-modal__preview-col">
+                <div className="share-modal__preview-wrapper">
+                  <CavePaintingView marks={marks} id="share-preview" />
+                </div>
+                <div className="share-modal__meta-strip">
+                  <span className="share-modal__meta-kicker">Technique:</span>
+                  <span className="share-modal__meta-badge">{techniqueText}</span>
+                </div>
+              </div>
+
+              {/* Right Column: Title, Author & Action Buttons */}
+              <form className="share-modal__form-col" onSubmit={handleSubmit}>
+                <div className="share-modal__field">
+                  <label htmlFor="artwork-title">Artwork Title <span>*</span></label>
+                  <input
+                    id="artwork-title"
+                    type="text"
+                    className="share-modal__input"
+                    placeholder="e.g. Cave Cat, Horned Bison"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    maxLength={50}
+                    autoFocus
+                  />
+                </div>
+
+                <div className="share-modal__field">
+                  <label htmlFor="author-name">Your Name or Moniker <span>*</span></label>
+                  <input
+                    id="author-name"
+                    type="text"
+                    className="share-modal__input"
+                    placeholder="e.g. Gabriel S., Nomad Explorer"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    maxLength={40}
+                  />
+                </div>
+
+                {error && <div className="share-modal__error">{error}</div>}
+
+                <div className="share-modal__actions">
+                  <button
+                    type="button"
+                    className="share-modal__cancel-btn"
+                    onClick={onClose}
+                    disabled={submitting}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="share-modal__submit-btn"
+                    disabled={submitting}
+                  >
+                    {submitting ? 'Publishing...' : 'Carve into Community Wall'}
+                  </button>
+                </div>
+              </form>
             </div>
-
-            <form className="share-modal__form" onSubmit={handleSubmit}>
-              <div className="share-modal__meta-strip">
-                <span>Medium &amp; Era:</span>
-                <span className="share-modal__meta-badge">{techniqueText}</span>
-              </div>
-
-              <div className="share-modal__field">
-                <label htmlFor="artwork-title">Artwork Title <span>*</span></label>
-                <input
-                  id="artwork-title"
-                  type="text"
-                  className="share-modal__input"
-                  placeholder="e.g. The Sacred Feline, Running Ibex, Hand of the Clan"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  maxLength={50}
-                  autoFocus
-                />
-              </div>
-
-              <div className="share-modal__field">
-                <label htmlFor="author-name">Your Name or Moniker <span>*</span></label>
-                <input
-                  id="author-name"
-                  type="text"
-                  className="share-modal__input"
-                  placeholder="e.g. Gabriel S., Nomad Explorer, Elena"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  maxLength={40}
-                />
-              </div>
-
-              {error && <div className="share-modal__error">{error}</div>}
-
-              <div className="share-modal__actions">
-                <button
-                  type="button"
-                  className="share-modal__cancel-btn"
-                  onClick={onClose}
-                  disabled={submitting}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="share-modal__submit-btn"
-                  disabled={submitting}
-                >
-                  {submitting ? 'Publishing...' : 'Carve into Community Wall'}
-                </button>
-              </div>
-            </form>
           </>
         ) : (
           <div className="share-modal__success">
@@ -236,4 +248,8 @@ export default function ShareArtworkModal({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 }

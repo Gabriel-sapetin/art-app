@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useInView } from '../hooks/useInView';
 import CavePaintingView from '../components/CavePaintingView';
 import {
@@ -18,6 +19,19 @@ export default function CommunityPage({ newArtwork = null }) {
   const [likeCounts, setLikeCounts] = useState({});
   const [activeFilter, setActiveFilter] = useState('all');
   const [inspectingArtwork, setInspectingArtwork] = useState(null);
+
+  // Close lightbox on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setInspectingArtwork(null);
+      }
+    };
+    if (inspectingArtwork) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [inspectingArtwork]);
 
   // Fetch from Upstash Redis API on mount
   useEffect(() => {
@@ -92,7 +106,7 @@ export default function CommunityPage({ newArtwork = null }) {
   };
 
   const handleDownloadSvg = (artwork) => {
-    const svgElem = document.getElementById(`community-svg-${artwork.id}`);
+    const svgElem = document.getElementById(`community-modal-svg-${artwork.id}`);
     if (!svgElem) return;
 
     const serializer = new XMLSerializer();
@@ -194,7 +208,7 @@ export default function CommunityPage({ newArtwork = null }) {
                   <div
                     className="community__card-canvas-wrap"
                     onClick={() => setInspectingArtwork(item)}
-                    title="Click to inspect this cave painting"
+                    title="Click to inspect and enlarge this cave painting"
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => { if (e.key === 'Enter') setInspectingArtwork(item); }}
@@ -203,7 +217,7 @@ export default function CommunityPage({ newArtwork = null }) {
                       {item.periodName || 'Paleolithic'}
                     </span>
                     <span className="community__card-inspect-hint">
-                      Click to inspect
+                      Click to inspect &middot; Zoom
                     </span>
                     <div id={`community-svg-${item.id}`}>
                       <CavePaintingView
@@ -215,7 +229,14 @@ export default function CommunityPage({ newArtwork = null }) {
 
                   <div className="community__card-content">
                     <div className="community__card-header">
-                      <h3 className="community__card-title">{item.title}</h3>
+                      <h3
+                        className="community__card-title"
+                        onClick={() => setInspectingArtwork(item)}
+                        title="Click to inspect"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {item.title}
+                      </h3>
                     </div>
 
                     <p className="community__card-author">
@@ -229,15 +250,26 @@ export default function CommunityPage({ newArtwork = null }) {
                     <div className="community__card-footer">
                       <span className="community__card-date">{item.date}</span>
 
-                      <button
-                        type="button"
-                        className={`community__like-btn ${isLiked ? 'liked' : ''}`}
-                        onClick={() => handleLike(item.id, item.likes)}
-                        aria-label={`Ignite ember. Current count: ${currentLikes}`}
-                      >
-                        <span aria-hidden="true">&#9733;</span>
-                        <span>{currentLikes} Embers</span>
-                      </button>
+                      <div className="community__card-actions">
+                        <button
+                          type="button"
+                          className="community__inspect-btn"
+                          onClick={() => setInspectingArtwork(item)}
+                          title="Inspect and zoom artwork"
+                        >
+                          Inspect &middot; Zoom
+                        </button>
+
+                        <button
+                          type="button"
+                          className={`community__like-btn ${isLiked ? 'liked' : ''}`}
+                          onClick={() => handleLike(item.id, item.likes)}
+                          aria-label={`Ignite ember. Current count: ${currentLikes}`}
+                        >
+                          <span aria-hidden="true">&#9733;</span>
+                          <span>{currentLikes} Embers</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </article>
@@ -248,8 +280,8 @@ export default function CommunityPage({ newArtwork = null }) {
 
       </div>
 
-      {/* Lightbox Modal */}
-      {inspectingArtwork && (
+      {/* Lightbox Modal Rendered Directly to Body via Portal */}
+      {inspectingArtwork && typeof document !== 'undefined' && createPortal(
         <div
           className="community-lightbox__overlay"
           role="dialog"
@@ -274,6 +306,13 @@ export default function CommunityPage({ newArtwork = null }) {
                 marks={inspectingArtwork.marks || []}
                 id={`modal-${inspectingArtwork.id}`}
               />
+              {/* Invisible full SVG for download reference */}
+              <div style={{ display: 'none' }} id={`community-modal-svg-${inspectingArtwork.id}`}>
+                <CavePaintingView
+                  marks={inspectingArtwork.marks || []}
+                  id={`export-${inspectingArtwork.id}`}
+                />
+              </div>
             </div>
 
             <div className="community-lightbox__info">
@@ -300,7 +339,8 @@ export default function CommunityPage({ newArtwork = null }) {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
