@@ -66,3 +66,4 @@ export default function CavePaintingView({ marks = [], id = 'default', className
     </svg>
   );
 }
+

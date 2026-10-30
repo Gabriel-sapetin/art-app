@@ -165,3 +165,4 @@ export function toggleArtworkLike(artworkId) {
     return { isLiked: false, countDelta: 0 };
   }
 }
+
