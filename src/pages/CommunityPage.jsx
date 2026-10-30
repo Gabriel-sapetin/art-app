@@ -197,85 +197,106 @@ export default function CommunityPage({ newArtwork = null }) {
             </div>
           </div>
 
-          {/* Artworks Grid */}
-          <div className="community__grid">
-            {filteredArtworks.map((item) => {
-              const isLiked = likedIds.includes(item.id);
-              const currentLikes = likeCounts[item.id] ?? item.likes ?? 0;
+          {/* Artworks Grid or Empty State */}
+          {filteredArtworks.length > 0 ? (
+            <div className="community__grid">
+              {filteredArtworks.map((item) => {
+                const isLiked = likedIds.includes(item.id);
+                const currentLikes = likeCounts[item.id] ?? item.likes ?? 0;
 
-              return (
-                <article key={item.id} className="community__card">
-                  <div
-                    className="community__card-canvas-wrap"
-                    onClick={() => setInspectingArtwork(item)}
-                    title="Click to inspect and enlarge this cave painting"
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === 'Enter') setInspectingArtwork(item); }}
-                  >
-                    <span className="community__card-badge">
-                      {item.periodName || 'Paleolithic'}
-                    </span>
-                    <span className="community__card-inspect-hint">
-                      Click to inspect &middot; Zoom
-                    </span>
-                    <div id={`community-svg-${item.id}`}>
-                      <CavePaintingView
-                        marks={item.marks || []}
-                        id={`card-${item.id}`}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="community__card-content">
-                    <div className="community__card-header">
-                      <h3
-                        className="community__card-title"
-                        onClick={() => setInspectingArtwork(item)}
-                        title="Click to inspect"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {item.title}
-                      </h3>
-                    </div>
-
-                    <p className="community__card-author">
-                      Carved by <strong>{item.author}</strong>
-                    </p>
-
-                    <div className="community__card-technique">
-                      {item.technique}
-                    </div>
-
-                    <div className="community__card-footer">
-                      <span className="community__card-date">{item.date}</span>
-
-                      <div className="community__card-actions">
-                        <button
-                          type="button"
-                          className="community__inspect-btn"
-                          onClick={() => setInspectingArtwork(item)}
-                          title="Inspect and zoom artwork"
-                        >
-                          Inspect &middot; Zoom
-                        </button>
-
-                        <button
-                          type="button"
-                          className={`community__like-btn ${isLiked ? 'liked' : ''}`}
-                          onClick={() => handleLike(item.id, item.likes)}
-                          aria-label={`Ignite ember. Current count: ${currentLikes}`}
-                        >
-                          <span aria-hidden="true">&#9733;</span>
-                          <span>{currentLikes} Embers</span>
-                        </button>
+                return (
+                  <article key={item.id} className="community__card">
+                    <div
+                      className="community__card-canvas-wrap"
+                      onClick={() => setInspectingArtwork(item)}
+                      title="Click to inspect and enlarge this cave painting"
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === 'Enter') setInspectingArtwork(item); }}
+                    >
+                      <span className="community__card-badge">
+                        {item.periodName || 'Paleolithic'}
+                      </span>
+                      <span className="community__card-inspect-hint">
+                        Click to inspect &middot; Zoom
+                      </span>
+                      <div id={`community-svg-${item.id}`}>
+                        <CavePaintingView
+                          marks={item.marks || []}
+                          id={`card-${item.id}`}
+                        />
                       </div>
                     </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+
+                    <div className="community__card-content">
+                      <div className="community__card-header">
+                        <h3
+                          className="community__card-title"
+                          onClick={() => setInspectingArtwork(item)}
+                          title="Click to inspect"
+                          style={{ cursor: 'pointer' }}
+                        >
+                          {item.title}
+                        </h3>
+                      </div>
+
+                      <p className="community__card-author">
+                        Carved by <strong>{item.author}</strong>
+                      </p>
+
+                      <div className="community__card-technique">
+                        {item.technique}
+                      </div>
+
+                      <div className="community__card-footer">
+                        <span className="community__card-date">{item.date}</span>
+
+                        <div className="community__card-actions">
+                          <button
+                            type="button"
+                            className="community__inspect-btn"
+                            onClick={() => setInspectingArtwork(item)}
+                            title="Inspect and zoom artwork"
+                          >
+                            Inspect &middot; Zoom
+                          </button>
+
+                          <button
+                            type="button"
+                            className={`community__like-btn ${isLiked ? 'liked' : ''}`}
+                            onClick={() => handleLike(item.id, item.likes)}
+                            aria-label={`Ignite ember. Current count: ${currentLikes}`}
+                          >
+                            <span aria-hidden="true">&#9733;</span>
+                            <span>{currentLikes} Embers</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="community__empty paper-card">
+              <div className="community__empty-icon">&#10022;</div>
+              <h3 className="community__empty-title">The Cave Wall Awaits Your Marks</h3>
+              <p className="community__empty-desc">
+                No cave paintings have been shared yet. Step into the Stone Age simulation above, shape your tool, paint or engrave on the cave wall, and be the first to share your artwork!
+              </p>
+              <a
+                href="#stone-age"
+                className="community__empty-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.getElementById('stone-age');
+                  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
+                Paint on the Cave Wall &uarr;
+              </a>
+            </div>
+          )}
         </div>
 
       </div>

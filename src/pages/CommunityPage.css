@@ -392,6 +392,67 @@
   border-color: #9c4b28;
 }
 
+/* ── Empty State ── */
+.community__empty {
+  text-align: center;
+  padding: clamp(36px, 6vw, 56px) clamp(20px, 4vw, 36px);
+  background: #fdfbf7;
+  border: 1px dashed rgba(139, 115, 85, 0.45);
+  border-radius: 12px;
+  max-width: 640px;
+  margin: 16px auto 32px;
+  box-shadow: 
+    0 8px 24px rgba(45, 34, 25, 0.05),
+    inset 0 0 25px rgba(139, 115, 85, 0.06);
+}
+
+.community__empty-icon {
+  font-size: 2.2rem;
+  color: #bd6540;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.community__empty-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  color: #2b1f17;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+
+.community__empty-desc {
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  color: #6d5b4b;
+  max-width: 500px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+
+.community__empty-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: #bd6540;
+  color: #ffffff;
+  border: 1px solid #9c4b28;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 10px rgba(189, 101, 64, 0.25);
+}
+
+.community__empty-btn:hover {
+  background: #a85430;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(189, 101, 64, 0.35);
+}
+
 /* ── Lightbox Modal (Directly in Body via Portal) ── */
 .community-lightbox__overlay {
   position: fixed;
