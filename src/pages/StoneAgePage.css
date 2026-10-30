@@ -1,0 +1,221 @@
+.stone-age { padding-top: clamp(3.25rem, 6vw, 5rem); }
+.stone-age__header { display: flex; justify-content: center; max-width: none; margin: 0 auto clamp(28px,4.5vh,44px); padding: 0; text-align: center; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.stone-age__sheet { overflow: hidden; border: 1px solid rgba(92,74,58,.22); border-radius: 7px; background: rgba(250,247,240,.97); box-shadow: 0 12px 32px rgba(42,36,32,.11); }
+
+.stone-age__periods { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid rgba(92,74,58,.18); }
+.stone-age__periods button { display: flex; align-items: center; gap: .8rem; min-height: 76px; padding: .8rem 1.25rem; text-align: left; color: var(--color-charcoal); border-right: 1px solid rgba(92,74,58,.14); transition: background .18s ease; }
+.stone-age__periods button:last-child { border-right: 0; }
+.stone-age__periods button:hover, .stone-age__periods button.active { background: #eee6d4; }
+.stone-age__periods button.active { box-shadow: inset 0 3px 0 #a88643; }
+.stone-age__period-index { color: #947248; font-family: var(--font-serif); font-size: 1.15rem; }
+.stone-age__periods strong, .stone-age__periods small { display: block; }
+.stone-age__periods strong { font-family: var(--font-serif); font-size: 1rem; }
+.stone-age__periods small { margin-top: .1rem; color: #806b52; font-size: .75rem; }
+
+.stone-age__period-note { display: grid; grid-template-columns: minmax(250px,.8fr) minmax(0,1.45fr); align-items: stretch; gap: clamp(1rem,2.4vw,1.8rem); padding: clamp(1rem,2.2vw,1.5rem); border-bottom: 1px solid rgba(92,74,58,.15); background: rgba(240,234,214,.45); }
+.stone-age__period-image { position: relative; min-height: 190px; aspect-ratio: 1.7; margin: 0; overflow: hidden; border: 1px solid rgba(92,74,58,.22); background: #ded2bc; box-shadow: 0 5px 14px rgba(52,39,24,.12); }
+.stone-age__period-image img { display: block; width: 100%; height: 100%; min-height: 190px; object-fit: cover; }
+.stone-age__period-image figcaption { position: absolute; bottom: .6rem; left: .65rem; padding: .3rem .5rem; border: 1px solid rgba(107,80,47,.24); background: rgba(250,247,239,.93); color: #775c3b; font-size: .66rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.stone-age__period-story { display: flex; min-width: 0; flex-direction: column; justify-content: center; align-items: flex-start; }
+.stone-age__period-story > .plate-label { font-size: .78rem; letter-spacing: .12em; }
+.stone-age__period-story h3 { margin: .1rem 0 .45rem; font-size: clamp(1.3rem,2.2vw,1.7rem); }
+.stone-age__period-story .stone-age__period-summary { max-width: 52rem; margin: 0; color: #65594b; font-size: .88rem; line-height: 1.55; text-align: left; text-indent: 0; hyphens: none; }
+.stone-age__period-purpose { width: 100%; margin-top: .8rem; padding: .65rem .8rem; border-left: 3px solid #a88643; background: rgba(250,247,240,.76); }
+.stone-age__period-purpose > span { display: block; margin-bottom: .18rem; color: #87683d; font-size: .65rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+.stone-age__period-purpose p { margin: 0; color: #514536; font-size: .79rem; line-height: 1.48; text-align: left; text-indent: 0; }
+
+.stone-age__sequence { display: grid; grid-template-columns: minmax(0,1fr) 44px minmax(0,1fr); align-items: center; gap: .7rem; margin: 1.1rem 1.3rem 0; }
+.stone-age__sequence-step { display: flex; align-items: center; gap: .85rem; min-height: 84px; padding: .8rem 1rem; border: 1px solid rgba(92,74,58,.22); background: #f1ece2; color: #726654; }
+.stone-age__sequence-step.current { border: 2px solid #9b794a; background: #efe5d0; box-shadow: 0 3px 10px rgba(77,58,34,.1); }
+.stone-age__sequence-step.complete { border-color: rgba(88,111,78,.45); background: #e9eddf; color: #56644c; }
+.stone-age__sequence-step.locked { border-style: dashed; background: #f5f2ec; color: #827969; }
+.stone-age__sequence-number { flex: 0 0 42px; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid currentColor; border-radius: 50%; font-family: var(--font-serif); font-size: 1rem; font-weight: 700; }
+.stone-age__sequence-step.current .stone-age__sequence-number { background: #8b6d43; border-color: #8b6d43; color: #fffaf0; }
+.stone-age__sequence-step.complete .stone-age__sequence-number { background: #6e805f; border-color: #6e805f; color: #fffaf0; }
+.stone-age__sequence-copy { display: flex; flex-direction: column; min-width: 0; }
+.stone-age__sequence-status { width: fit-content; margin-bottom: .12rem; color: #8c6b3d; font-size: .65rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.stone-age__sequence-step.complete .stone-age__sequence-status { color: #566f4b; }
+.stone-age__sequence-step.locked .stone-age__sequence-status { color: #887f70; }
+.stone-age__sequence-copy strong { color: #332a20; font-family: var(--font-serif); font-size: 1rem; line-height: 1.3; }
+.stone-age__sequence-step.locked .stone-age__sequence-copy strong { color: #766e62; }
+.stone-age__sequence-copy small { margin-top: .12rem; color: #716452; font-size: .75rem; line-height: 1.35; }
+.stone-age__sequence-connector { height: 2px; background: repeating-linear-gradient(90deg,#b7a98e 0 5px,transparent 5px 9px); }
+.stone-age__sequence:has(.stone-age__sequence-step.complete) .stone-age__sequence-connector { background: #8d9a7c; }
+.stone-age__next-age { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin: .8rem 1.3rem 0; padding: .85rem 1rem; border: 1px solid rgba(88,111,78,.45); border-left: 4px solid #758565; background: #edf0e5; }
+.stone-age__next-age-copy { min-width: 0; }
+.stone-age__next-age-label { display: block; margin-bottom: .15rem; color: #566f4b; font-size: .66rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.stone-age__next-age-copy strong { display: block; color: #3c4934; font-family: var(--font-serif); font-size: 1rem; }
+.stone-age__next-age-copy p { margin: .15rem 0 0; color: #5e6855; font-size: .78rem; line-height: 1.45; text-align: left; text-indent: 0; }
+.stone-age__next-age-button { flex: 0 0 auto; padding: .65rem .9rem; border: 1px solid #667753; border-radius: 3px; background: #6c7c59; color: #fffaf0; font-size: .82rem; font-weight: 700; transition: background .18s ease, transform .18s ease; }
+.stone-age__next-age-button:hover { background: #566847; transform: translateY(-1px); }
+
+.stone-age__steps { display: grid; grid-template-columns: minmax(280px,.88fr) minmax(0,1.5fr); gap: 1.2rem; padding: 1.3rem; }
+.stone-age__tool-panel, .stone-age__wall-panel { min-width: 0; padding: 1.1rem; border: 1px solid rgba(92,74,58,.18); background: #f7f2e8; }
+.stone-age__panel-heading { display: flex; align-items: center; justify-content: space-between; gap: .7rem; }
+.stone-age__panel-heading h3 { margin-top: .15rem; font-size: 1.25rem; }
+.stone-age__step-kicker { display: inline-flex; align-items: center; min-height: 24px; padding: .2rem .48rem; border-left: 3px solid #9b794a; background: #eee5d3; color: #614a2b; font-family: var(--font-body); font-size: .68rem; font-weight: 750; letter-spacing: .1em; line-height: 1.3; text-transform: uppercase; }
+.stone-age__reset, .stone-age__clear { padding: .45rem .65rem; color: #776349; border: 1px solid rgba(92,74,58,.24); border-radius: 3px; font-size: .76rem; white-space: nowrap; }
+.stone-age__reset:hover, .stone-age__clear:hover:not(:disabled) { background: #eee6d4; }
+.stone-age__clear:disabled { opacity: .4; cursor: default; }
+
+.stone-age__material { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: 1rem; }
+.stone-age__material button { min-height: 57px; padding: .55rem .65rem; text-align: left; border: 1px solid rgba(92,74,58,.22); background: rgba(255,253,247,.68); }
+.stone-age__material button.active { border-color: #98794b; background: #eee6d4; }
+.stone-age__material strong, .stone-age__material span { display: block; }
+.stone-age__material strong { color: #554535; font-family: var(--font-serif); font-size: .83rem; }
+.stone-age__material span { margin-top: .18rem; color: #786a57; font-size: .7rem; line-height: 1.3; }
+.stone-age__striker { display: flex; align-items: center; gap: .75rem; width: 100%; margin-top: .7rem; padding: .5rem .7rem; border: 1px solid rgba(92,74,58,.24); background: #eee6d4; color: #66543c; text-align: left; cursor: grab; touch-action: none; user-select: none; }
+.stone-age__striker:hover:not(:disabled) { border-color: #98794b; background: #e9dec8; }
+.stone-age__striker:active:not(:disabled) { cursor: grabbing; }
+.stone-age__striker:disabled { cursor: default; opacity: .72; }
+.stone-age__striker.is-dragging { opacity: .38; }
+.stone-age__striker-illustration { flex: 0 0 64px; width: 64px; height: 42px; overflow: visible; }
+.stone-age__striker strong, .stone-age__striker small { display: block; }
+.stone-age__striker strong { color: #554535; font-family: var(--font-serif); font-size: .88rem; }
+.stone-age__striker small { margin-top: .15rem; color: #806b52; font-size: .72rem; line-height: 1.35; }
+.stone-age__drag-follow { position: fixed; z-index: 1100; flex: none; pointer-events: none; filter: drop-shadow(0 4px 4px rgba(25,20,16,.34)); }
+.stone-age__drag-follow--hammer { width: 82px; height: 54px; transform: translate(-50%,-50%) rotate(-18deg); }
+.stone-age__drag-follow--axe { width: 100px; height: 68px; transform: translate(-50%,-50%); }
+.stone-age__core-wrap { position: relative; display: grid; place-items: center; min-height: 215px; margin: .5rem 0 .2rem; }
+.stone-age__core-wrap.is-target { outline: 2px dashed rgba(152,121,75,.85); outline-offset: 5px; background: rgba(238,230,212,.45); transform: scale(1.025); }
+.stone-age__core-wrap.is-struck { animation: stoneCoreImpact .28s ease-out; }
+.stone-age__core-wrap.is-struck::after { content: ''; position: absolute; top: 43%; left: 50%; width: 18px; height: 18px; border: 2px solid rgba(246,226,186,.9); border-radius: 50%; transform: translate(-50%,-50%); animation: stoneImpactFlash .28s ease-out forwards; pointer-events: none; }
+@keyframes stoneCoreImpact { 0%,100% { transform: translateX(0); } 16% { transform: translateX(-9px) rotate(-1.5deg); } 34% { transform: translateX(7px) rotate(1deg); } 55% { transform: translateX(-4px); } 76% { transform: translateX(2px); } }
+@keyframes stoneImpactFlash { 0% { opacity: .95; scale: .5; } 100% { opacity: 0; scale: 8; } }
+.stone-core { display: block; width: min(100%,330px); height: auto; overflow: visible; }
+.stone-core__fragment { transform-box: fill-box; transform-origin: center; animation: stoneFragmentSplit .36s cubic-bezier(.2,.75,.25,1) both; }
+.stone-core__fragment--one { --split-x: -11px; --split-y: -10px; --split-rotation: -2deg; }
+.stone-core__fragment--two { --split-x: 11px; --split-y: -10px; --split-rotation: 2deg; }
+.stone-core__fragment--three { --split-x: -11px; --split-y: 10px; --split-rotation: 1.5deg; }
+.stone-core__fragment--four { --split-x: 12px; --split-y: 11px; --split-rotation: -2deg; }
+.stone-core__fragment--chip { --split-x: 23px; --split-y: 20px; --split-rotation: 12deg; }
+@keyframes stoneFragmentSplit { from { transform: translate(0,0) rotate(0); } to { transform: translate(var(--split-x),var(--split-y)) rotate(var(--split-rotation)); } }
+.stone-core__chip { transform-box: fill-box; transform-origin: center; animation: stoneChipFly .3s ease-out both; }
+.stone-core__chip--1 { --chip-x: 18px; --chip-y: -12px; --chip-r: 24deg; }
+.stone-core__chip--2 { --chip-x: -18px; --chip-y: 14px; --chip-r: -20deg; }
+.stone-core__chip--3 { --chip-x: 17px; --chip-y: 16px; --chip-r: 31deg; }
+@keyframes stoneChipFly { from { transform: translate(0,0) rotate(0); opacity: .2; } to { transform: translate(var(--chip-x),var(--chip-y)) rotate(var(--chip-r)); opacity: 1; } }
+.stone-core__caption { fill: #f1e6cf; font-family: Georgia,serif; font-size: 11px; letter-spacing: 2px; }
+.stone-age__progress { height: 5px; overflow: hidden; background: #e2d7c5; }
+.stone-age__progress span { display: block; height: 100%; background: #9c7949; transition: width .25s ease; }
+.stone-age__tool-footer { display: flex; align-items: flex-start; flex-direction: column; gap: .3rem; margin-top: .7rem; color: #806b52; font-size: .76rem; line-height: 1.45; }
+.stone-age__action { padding: .58rem .75rem; border: 1px solid #826844; border-radius: 3px; background: #816849; color: #fffaf0; font-weight: 600; font-size: .78rem; white-space: nowrap; transition: background .18s ease; }
+.stone-age__action:hover:not(:disabled) { background: #654f37; }
+.stone-age__action:disabled { background: #e8decb; color: #6f614d; cursor: default; }
+
+.stone-age__mark-tools { display: flex; gap: .55rem; margin: 1rem 0 .7rem; }
+.stone-age__mark-tools button { display: flex; flex-direction: column; align-items: flex-start; gap: .15rem; padding: .52rem .7rem; border: 1px solid rgba(92,74,58,.24); background: #fffdf7; text-align: left; }
+.stone-age__mark-tools button.active { border-color: #98794b; background: #eee6d4; }
+.stone-age__mark-tools button:disabled { opacity: .55; cursor: not-allowed; }
+.stone-age__mark-tools strong { color: #554535; font-family: var(--font-serif); font-size: .84rem; }
+.stone-age__mark-tools small { color: #806b52; font-size: .7rem; }
+.stone-age__wall { position: relative; overflow: hidden; border: 1px solid #342a23; background: #45372d; }
+.stone-cave-surface { display: block; width: 100%; height: auto; min-height: 220px; touch-action: none; cursor: crosshair; }
+.stone-cave-surface__hint { fill: rgba(246,232,204,.7); font-family: var(--font-handwritten); font-size: 25px; pointer-events: none; }
+.stone-age__wall-lock { position: absolute; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgba(36,29,24,.48); color: #f5ebd8; text-align: center; font-family: var(--font-serif); font-size: 1rem; pointer-events: none; }
+.stone-age__wall-panel.is-step-locked .stone-age__mark-tools { opacity: .55; }
+.stone-age__wall-panel.is-step-locked .stone-age__wall { filter: saturate(.72); }
+.stone-age__wall-hint { margin: .55rem 0 0; color: #806b52; font-size: .75rem; line-height: 1.45; text-align: left; text-indent: 0; }
+.stone-age__field-note { display: grid; grid-template-columns: 120px 1fr; gap: .75rem; padding: 1rem 1.5rem; border-top: 1px solid rgba(92,74,58,.16); background: rgba(240,234,214,.42); }
+.stone-age__field-note .plate-label { align-self: start; }
+.stone-age__field-note p { margin: 0; color: #65594b; font-size: .85rem; line-height: 1.55; text-align: left; text-indent: 0; }
+.stone-age__simulation-instruction { margin: .85rem 0 .7rem; color: #65594b; font-size: .82rem; line-height: 1.5; text-align: left; text-indent: 0; }
+
+
+.stone-age__haft { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; gap: .45rem; min-height: 108px; margin: 1rem 0; padding: 1.2rem .75rem; }
+.stone-age__haft-handle { position: absolute; inset: 30% 2% 30%; border: 2px solid #594432; border-radius: 10px 30px 30px 10px; background: linear-gradient(180deg,#a47b4f,#775536 48%,#5d432f); box-shadow: inset 0 3px rgba(245,222,177,.22), 0 3px 6px rgba(45,33,22,.2); }
+.stone-age__haft-slot { position: relative; z-index: 1; display: grid; place-items: center; min-width: 0; min-height: 70px; padding: .25rem; border: 1px dashed rgba(245,228,194,.7); background: rgba(47,35,26,.16); color: #f4e8cf; }
+.stone-age__haft-slot.filled { border-style: solid; background: rgba(47,35,26,.08); }
+.stone-age__empty-groove { font-size: .65rem; text-shadow: 0 1px 2px #453425; }
+.stone-age__blade { display: block; width: 45px; height: 15px; border: 1px solid #4f4b43; background: linear-gradient(145deg,#e1ded4,#7e7a70); clip-path: polygon(0 50%,30% 0,100% 30%,77% 100%,26% 82%); filter: drop-shadow(0 2px 1px rgba(30,25,20,.4)); }
+.stone-age__blade--2 { transform: rotate(180deg); }
+.stone-age__blade--3 { height: 19px; clip-path: polygon(0 38%,20% 0,100% 12%,76% 88%,14% 100%); }
+.stone-age__flake-tray { display: grid; grid-template-columns: repeat(3,1fr); gap: .45rem; margin-bottom: 1rem; }
+.stone-age__flake-tray button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; min-height: 78px; padding: .45rem .25rem; border: 1px solid rgba(92,74,58,.23); background: #fffdf7; color: #655542; }
+.stone-age__flake-tray button:hover:not(:disabled), .stone-age__flake-tray button.selected { border-color: #98794b; background: #eee6d4; }
+.stone-age__flake-tray button:disabled { opacity: .42; cursor: default; }
+.stone-age__flake-tray strong { font-size: .68rem; font-weight: 500; text-align: center; }
+.stone-age__flake { width: 35px; height: 13px; border: 1px solid #6c675d; background: linear-gradient(145deg,#e3dfd3,#858076); clip-path: polygon(0 50%,25% 8%,100% 0,73% 100%,30% 82%); }
+.stone-age__flake--2 { transform: rotate(180deg); }
+.stone-age__flake--3 { height: 16px; clip-path: polygon(0 32%,18% 0,88% 18%,100% 74%,30% 100%); }
+
+.stone-age__abrasive { position: relative; display: grid; place-items: center; min-height: 185px; overflow: hidden; border: 1px solid #6e604d; background: linear-gradient(180deg,#b5a080,#8f7959); touch-action: none; }
+.stone-age__abrasive.is-ground { animation: abrasiveImpact .26s ease-out; }
+@keyframes abrasiveImpact { 45% { filter: brightness(1.2); } }
+.stone-age__abrasive-grain { position: absolute; inset: 0; opacity: .65; background-image: radial-gradient(ellipse at 22% 36%,rgba(245,229,197,.38) 0 1px,transparent 2px),radial-gradient(ellipse at 72% 68%,rgba(55,42,29,.22) 0 1px,transparent 2px),repeating-linear-gradient(172deg,transparent 0 16px,rgba(70,55,37,.18) 17px 19px,transparent 20px 31px); background-size: 18px 16px,23px 20px,auto; }
+.stone-age__polish-lines { position: absolute; inset: auto 7% 17%; display: flex; height: 9px; gap: 5px; }
+.stone-age__polish-lines span { flex: 1; border-radius: 8px; background: rgba(57,43,29,.32); }
+.stone-age__polish-lines span.complete { background: #ead7a6; box-shadow: 0 0 9px rgba(255,236,186,.55); }
+.stone-age__polisher { position: absolute; z-index: 2; top: 20%; left: 34%; padding: .1rem; border: 0; background: transparent; cursor: grab; touch-action: none; user-select: none; }
+.stone-age__polisher:active { cursor: grabbing; }
+.stone-age__axe-illustration { display: block; width: 132px; height: 90px; filter: drop-shadow(0 3px 2px rgba(44,33,24,.38)); transition: filter .2s ease; }
+.stone-age__axe-illustration.stone-age__drag-follow--axe { width: 100px; height: 68px; }
+.stone-age__axe-illustration.is-polished { filter: drop-shadow(0 0 5px rgba(255,239,199,.75)) drop-shadow(0 3px 2px rgba(44,33,24,.38)); }
+.stone-age__axe-finished { position: absolute; top: 13%; left: 33%; z-index: 2; display: flex; flex-direction: column; align-items: center; color: #fff2d2; font-family: var(--font-serif); font-size: .67rem; letter-spacing: .12em; text-shadow: 0 1px 3px #403020; }
+.stone-age__axe-finished .stone-age__axe-illustration { width: 142px; height: 98px; }
+.stone-age__axe-lesson { margin-top: .85rem; padding: .7rem .8rem; border-left: 2px solid #b99a5c; background: #f0eadc; }
+.stone-age__axe-lesson strong { color: #6e5637; font-family: var(--font-serif); font-size: .88rem; }
+.stone-age__axe-lesson p { margin: .2rem 0 0; color: #65594b; font-size: .76rem; line-height: 1.5; text-align: left; text-indent: 0; }
+.stone-age__abrasive-hint { position: absolute; z-index: 1; bottom: .35rem; left: 0; right: 0; color: #f5ebd8; font-size: .68rem; text-align: center; text-shadow: 0 1px 2px #4b3c2c; pointer-events: none; }
+.stone-age__plate-label { color: #947248; font-family: var(--font-handwritten); font-size: 1rem; white-space: nowrap; }
+.stone-age__timber-stage { position: relative; display: grid; place-items: center; min-height: 245px; margin-top: .7rem; overflow: hidden; border: 1px solid #53402f; background: radial-gradient(ellipse at 50% 50%,#9b7852,#604832 78%); }
+.stone-age__timber-stage.is-struck { animation: timberImpact .28s ease-out; }
+@keyframes timberImpact { 15% { transform: translateX(-8px) rotate(-.7deg); } 32% { transform: translateX(6px) rotate(.6deg); } 55% { transform: translateX(-3px); } }
+.stone-age__timber { display: block; width: 100%; height: auto; padding: .4rem; overflow: visible; }
+.stone-age__timber-caption { fill: #f1dfbd; font-family: Georgia,serif; font-size: 13px; letter-spacing: 2px; }
+.stone-age__timber-stage.is-struck .stone-age__log-body { filter: brightness(1.22); }
+.stone-age__timber.is-split .stone-age__log-body { transform: translateX(5px); }
+.stone-age__timber-result { position: absolute; right: .65rem; bottom: .6rem; padding: .35rem .5rem; border: 1px solid rgba(249,232,196,.6); background: rgba(43,32,22,.64); color: #fff0d1; font-family: var(--font-serif); font-size: .76rem; }
+.stone-age__timber-lock { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; padding: 1rem; background: rgba(35,28,22,.53); color: #f5ebd8; text-align: center; font-family: var(--font-serif); }
+.stone-age__wood-progress { height: 6px; margin-top: .65rem; overflow: hidden; background: #e2d7c5; }
+.stone-age__wood-progress span { display: block; height: 100%; background: #9c7949; transition: width .24s ease; }
+.stone-age__wood-axe { display: flex; align-items: center; gap: .7rem; width: 100%; margin-top: .65rem; padding: .4rem .6rem; border: 1px solid rgba(92,74,58,.24); background: #eee6d4; color: #66543c; text-align: left; cursor: grab; touch-action: none; user-select: none; }
+.stone-age__wood-axe:hover:not(:disabled) { border-color: #98794b; background: #e9dec8; }
+.stone-age__wood-axe:active:not(:disabled) { cursor: grabbing; }
+.stone-age__wood-axe:disabled { opacity: .56; cursor: default; }
+.stone-age__wood-axe .stone-age__axe-illustration { flex: 0 0 76px; width: 76px; height: 54px; }
+.stone-age__wood-axe strong, .stone-age__wood-axe small { display: block; }
+.stone-age__wood-axe strong { color: #554535; font-family: var(--font-serif); font-size: .85rem; }
+.stone-age__wood-axe small { margin-top: .12rem; color: #806b52; font-size: .7rem; }
+
+@media (max-width: 820px) {
+  .stone-age__steps { grid-template-columns: 1fr; }
+  .stone-age__core-wrap { min-height: 190px; }
+}
+@media (max-width: 600px) {
+  .stone-age__header { padding: 0; }
+  .stone-age__periods button { justify-content: center; padding: .65rem .35rem; gap: .4rem; }
+  .stone-age__periods small { display: none; }
+  .stone-age__periods strong { font-size: .82rem; }
+  .stone-age__period-index { font-size: .95rem; }
+  .stone-age__period-note { grid-template-columns: 1fr; gap: .35rem; padding: 1rem; }
+  .stone-age__sequence { grid-template-columns: 1fr; gap: .4rem; margin: .8rem .65rem 0; }
+  .stone-age__sequence-step { min-height: 70px; padding: .6rem .75rem; }
+  .stone-age__sequence-number { flex-basis: 36px; width: 36px; height: 36px; }
+  .stone-age__sequence-connector { justify-self: center; width: 2px; height: 15px; background: repeating-linear-gradient(180deg,#b7a98e 0 4px,transparent 4px 8px); }
+  .stone-age__sequence:has(.stone-age__sequence-step.complete) .stone-age__sequence-connector { background: #8d9a7c; }
+  .stone-age__next-age { align-items: stretch; flex-direction: column; gap: .65rem; margin: .65rem .65rem 0; padding: .8rem; }
+  .stone-age__next-age-button { width: 100%; }
+  .stone-age__steps { padding: .65rem; }
+  .stone-age__period-image { min-height: 175px; max-height: 220px; }
+  .stone-age__period-image img { min-height: 175px; }
+  .stone-age__tool-panel, .stone-age__wall-panel { padding: .8rem; }
+  .stone-age__panel-heading h3 { font-size: 1.08rem; }
+  .stone-age__field-note { grid-template-columns: 1fr; gap: .25rem; padding: 1rem; }
+  .stone-age__tool-footer { align-items: flex-start; flex-direction: column; }
+  .stone-age__haft { min-height: 92px; padding: 1rem .25rem; }
+  .stone-age__haft-slot { min-height: 62px; }
+  .stone-age__abrasive { min-height: 150px; }
+  .stone-age__polisher .stone-age__axe-illustration { width: 112px; height: 78px; }
+  .stone-age__axe-finished .stone-age__axe-illustration { width: 122px; height: 84px; }
+  .stone-age__timber-stage { min-height: 190px; }
+  .stone-age__wood-axe .stone-age__axe-illustration { width: 68px; height: 48px; }
+  .stone-cave-surface { min-height: 170px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stone-age__periods button, .stone-age__progress span, .stone-age__action { transition: none; }
+  .stone-age__core-wrap.is-struck { animation: none; }
+  .stone-age__core-wrap.is-struck::after, .stone-core__fragment, .stone-core__chip { animation: none; }
+  .stone-age__abrasive.is-ground { animation: none; }
+  .stone-age__timber-stage.is-struck { animation: none; }
+}

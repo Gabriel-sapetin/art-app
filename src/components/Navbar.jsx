@@ -4,6 +4,7 @@ import './Navbar.css';
 const navLinks = [
   { id: 'home', label: 'Home', href: '#home' },
   { id: 'explore', label: 'Explore', href: '#explore' },
+  { id: 'stone-age', label: 'Stone Age', href: '#stone-age' },
   { id: 'artists', label: 'Artists', href: '#artists' },
   { id: 'studio', label: 'Studio', href: '#studio' },
   { id: 'activities', label: 'Activities', href: '#activities' },

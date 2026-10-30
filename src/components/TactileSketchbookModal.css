@@ -178,7 +178,7 @@
   width: 50%;
   z-index: 25;
   transform-style: preserve-3d;
-  animation-duration: 1200ms;
+  animation-duration: 1050ms;
   animation-timing-function: cubic-bezier(0.4, 0.04, 0.2, 1);
   animation-fill-mode: both;
   pointer-events: none;
@@ -197,7 +197,7 @@
   pointer-events: none;
   background: linear-gradient(90deg, transparent 35%, rgba(255, 252, 244, 0.45) 55%, transparent 75%);
   opacity: 0;
-  animation: pageCurlLight 1200ms ease-in-out both;
+  animation: pageCurlLight 1050ms ease-in-out both;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -650,6 +650,51 @@
     box-shadow 0.85s 0.15s ease;
   box-shadow: 0 4px 10px rgba(42, 36, 32, 0.12);
   will-change: transform, opacity;
+}
+
+.popup-book__cursor-cue {
+  position: absolute;
+  top: -58px;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  transform: translateX(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.popup-book__cursor-cue > span:first-child {
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(126, 96, 59, 0.32);
+  border-radius: 2px;
+  background: rgba(250, 246, 236, 0.96);
+  box-shadow: 0 3px 8px rgba(54, 40, 24, 0.14);
+  color: #735638;
+  font-family: var(--font-handwritten);
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.popup-book__cursor-arrow {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 22px;
+  background: #8d6c46;
+}
+
+.popup-book__cursor-arrow::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid #8d6c46;
+  border-bottom: 1.5px solid #8d6c46;
+  content: '';
+  transform: translateX(-50%) rotate(45deg);
 }
 
 /* Pop-Up Standing State */
@@ -1312,12 +1357,11 @@
   border-radius: 4px 0 0 4px;
   background-image:
     linear-gradient(180deg, rgba(250, 243, 229, 0.82), rgba(250, 243, 229, 0.77) 50%, rgba(250, 243, 229, 0.84)),
-    linear-gradient(90deg, rgba(118, 78, 39, 0.12), transparent 18%, transparent 82%, rgba(140, 94, 48, 0.1)),
     url('/assets/aged-parchment.avif');
-  background-size: 100% 100%, 100% 100%, cover;
-  background-position: center, center, center;
+  background-size: 100% 100%, cover;
+  background-position: center, center;
   background-repeat: no-repeat;
-  background-blend-mode: normal, normal, multiply;
+  background-blend-mode: normal, multiply;
   overflow: visible;
 }
 
@@ -1325,12 +1369,11 @@
   border-radius: 0 4px 4px 0;
   background-image:
     linear-gradient(180deg, rgba(250, 243, 229, 0.82), rgba(250, 243, 229, 0.77) 50%, rgba(250, 243, 229, 0.84)),
-    linear-gradient(270deg, rgba(118, 78, 39, 0.12), transparent 18%, transparent 82%, rgba(140, 94, 48, 0.1)),
     url('/assets/aged-parchment.avif');
-  background-size: 100% 100%, 100% 100%, cover;
-  background-position: center, center, center;
+  background-size: 100% 100%, cover;
+  background-position: center, center;
   background-repeat: no-repeat;
-  background-blend-mode: normal, normal, multiply;
+  background-blend-mode: normal, multiply;
   padding-top: 22px;
   padding-bottom: 22px;
   overflow: hidden;
@@ -1502,11 +1545,12 @@
 .sketchbook-modal__overlay--inline .sketchbook-turn-leaf__face {
   background-color: #f7efe2 !important;
   background-image:
-    linear-gradient(180deg, rgba(250, 243, 229, 0.96), rgba(250, 243, 229, 0.94)),
+    linear-gradient(180deg, rgba(250, 243, 229, 0.82), rgba(250, 243, 229, 0.77) 50%, rgba(250, 243, 229, 0.84)),
     url('/assets/aged-parchment.avif');
   background-size: 100% 100%, cover;
-  background-position: center;
+  background-position: center, center;
   background-repeat: no-repeat;
+  background-blend-mode: normal, multiply;
   color: #251b13;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
@@ -1527,13 +1571,6 @@
 .sketchbook-modal__overlay--inline .sketchbook-turn-leaf__face--front p {
   color: #826443;
 }
-
-.sketchbook-modal__overlay--inline .sketchbook-turn-leaf__face--back {
-  background-image:
-    linear-gradient(180deg, rgba(250, 243, 229, 0.98), rgba(247, 240, 226, 0.96)),
-    url('/assets/aged-parchment.avif');
-}
-
 
 /* ── Responsive Behavior ── */
 @media (max-width: 900px) {

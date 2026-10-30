@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ExplorePage from './pages/ExplorePage';
+import StoneAgePage from './pages/StoneAgePage';
 import ArtistsPage from './pages/ArtistsPage';
 import ArtStudioPage from './pages/ArtStudioPage';
 import ActivitiesPage from './pages/ActivitiesPage';
@@ -11,6 +12,9 @@ import ReferencesPage from './pages/ReferencesPage';
 import './App.css';
 
 export default function App() {
+  const [isCompactViewport, setIsCompactViewport] = useState(() => (
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 760px)').matches
+  ));
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [isBookOpen, setIsBookOpen] = useState(() => {
     // If user opens a direct section link like #explore, #artists, open directly
@@ -20,6 +24,14 @@ export default function App() {
     return false;
   });
   const [isOpening, setIsOpening] = useState(false);
+
+  useEffect(() => {
+    const compactScreen = window.matchMedia('(max-width: 760px)');
+    const updateViewport = (event) => setIsCompactViewport(event.matches);
+    setIsCompactViewport(compactScreen.matches);
+    compactScreen.addEventListener('change', updateViewport);
+    return () => compactScreen.removeEventListener('change', updateViewport);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +65,25 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (isCompactViewport) {
+    return (
+      <main className="desktop-view-notice" aria-labelledby="desktop-view-notice-title">
+        <section className="desktop-view-notice__paper">
+          <span className="desktop-view-notice__eyebrow">Ochre &amp; Ember · A Journey Through Western Art</span>
+          <h1 id="desktop-view-notice-title">Best experienced on a desktop</h1>
+          <p>
+            This interactive art history journey is designed for a wider screen, where the book,
+            artwork spreads, and hands-on studies have room to unfold.
+          </p>
+          <p>
+            For the intended layout, open this page on a computer or choose <strong>Desktop site</strong>
+            from your mobile browser menu.
+          </p>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <div className="app">
       {/* Navigation: Only visible when book is opened */}
@@ -74,7 +105,10 @@ export default function App() {
             {/* 2. Explore Western Art History */}
             <ExplorePage />
 
-            {/* 3. Artist Spotlight: Meet the Masters */}
+            {/* 3. Stone Age simulation */}
+            <StoneAgePage />
+
+            {/* 4. Artist Spotlight: Meet the Masters */}
             <ArtistsPage />
 
             {/* 4. Art Studio: experiment with historical techniques */}
@@ -114,6 +148,7 @@ export default function App() {
                   <ul className="footer__links">
                     <li><a href="#explore">Prehistoric Art & Cave Marks</a></li>
                     <li><a href="#explore">Stone Tools & Lithic Reduction</a></li>
+                    <li><a href="#stone-age">Stone Age Making Simulation</a></li>
                     <li><a href="#explore">Medieval Arts & Manuscripts</a></li>
                     <li><a href="#artists">Western Masters & Innovations</a></li>
                     <li><a href="#explore">Classical Greek Vessels & Paintings</a></li>

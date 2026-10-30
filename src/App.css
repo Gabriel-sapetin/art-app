@@ -9,6 +9,63 @@
   position: relative;
 }
 
+.desktop-view-notice {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 1.25rem;
+  background:
+    linear-gradient(rgba(239, 231, 215, 0.36), rgba(239, 231, 215, 0.36)),
+    url('/assets/aged-parchment.avif') center / cover no-repeat,
+    var(--color-parchment);
+}
+
+.desktop-view-notice__paper {
+  width: min(100%, 34rem);
+  padding: clamp(2rem, 8vw, 3.25rem) clamp(1.4rem, 7vw, 3rem);
+  border: 1px solid rgba(104, 79, 48, 0.27);
+  border-radius: 4px;
+  background: rgba(250, 247, 239, 0.92);
+  box-shadow: 0 18px 48px rgba(54, 40, 24, 0.18), inset 0 0 36px rgba(150, 119, 77, 0.08);
+  color: #4e4031;
+  text-align: center;
+}
+
+.desktop-view-notice__eyebrow {
+  display: block;
+  margin-bottom: 1rem;
+  color: #947248;
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.desktop-view-notice__paper h1 {
+  margin: 0 auto 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 8vw, 2.45rem);
+  line-height: 1.15;
+}
+
+.desktop-view-notice__paper p {
+  margin: 0.85rem 0 0;
+  color: #675747;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: center;
+  text-indent: 0;
+}
+
+.desktop-view-notice__paper strong {
+  color: #56422e;
+}
+
 main {
   flex: 1;
 }

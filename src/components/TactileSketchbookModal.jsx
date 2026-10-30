@@ -19,12 +19,13 @@ export default function TactileSketchbookModal({
   const [showLoupe, setShowLoupe] = useState(false);
   const [flip, setFlip] = useState(null);
   const [showIndex, setShowIndex] = useState(false);
-  const [popupReady, setPopupReady] = useState(false);
+  const [popupReady, setPopupReady] = useState(true);
+  const [hasHoveredArtwork, setHasHoveredArtwork] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const editorialRef = useRef(null);
-  const leftPageRef = useRef(null);
   const coverTouchStart = useRef(null);
+  const prefetchedArtworkImages = useRef(new Map());
 
   useEffect(() => {
     if (initialArtworkId) {
@@ -51,21 +52,32 @@ export default function TactileSketchbookModal({
     if (editorialRef.current) editorialRef.current.scrollTop = 0;
   }, [currentIndex, flip]);
 
-  // Trigger popup animation after a page flip completes or on mount
   useEffect(() => {
-    setPopupReady(false);
-    const timer = setTimeout(() => setPopupReady(true), 60);
-    return () => clearTimeout(timer);
+    setHasHoveredArtwork(false);
+    const adjacentArtworks = [artworks[currentIndex - 1], artworks[currentIndex + 1]].filter(Boolean);
+    const adjacentUrls = new Set(adjacentArtworks.map(artwork => artwork.image));
+    for (const url of prefetchedArtworkImages.current.keys()) {
+      if (!adjacentUrls.has(url)) prefetchedArtworkImages.current.delete(url);
+    }
+    adjacentArtworks.forEach(({ image: url }) => {
+      if (prefetchedArtworkImages.current.has(url)) return;
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = url;
+      prefetchedArtworkImages.current.set(url, image);
+      if (image.decode) image.decode().catch(() => prefetchedArtworkImages.current.delete(url));
+    });
   }, [currentIndex]);
 
   // Interactive 3D mouse parallax on the pop-up page
   const handleMouseMove = useCallback((e) => {
-    if (!leftPageRef.current || showLoupe) return;
-    const rect = leftPageRef.current.getBoundingClientRect();
+    if (showLoupe) return;
+    const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2; // -1 to 1
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2; // -1 to 1
     setTilt({ x: Math.max(-1, Math.min(1, x)), y: Math.max(-1, Math.min(1, y)) });
     setIsHovering(true);
+    setHasHoveredArtwork(true);
   }, [showLoupe]);
 
   const handleMouseLeave = useCallback(() => {
@@ -87,7 +99,6 @@ export default function TactileSketchbookModal({
 
   const triggerFlip = (newIndex, direction) => {
     if (flip || newIndex < 0 || newIndex >= artworks.length) return;
-    setPopupReady(false);
     setFlip({
       direction,
       from: currentArtwork,
@@ -259,10 +270,7 @@ export default function TactileSketchbookModal({
 
           {/* LEFT PAGE: 3D Pop-Up Book Artwork Spread */}
           <section
-            ref={leftPageRef}
             className="sketchbook-page sketchbook-page--left"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
           >
             <div className="sketchbook-plate__canvas-wrap">
               {showLoupe ? (
@@ -299,6 +307,8 @@ export default function TactileSketchbookModal({
                   <div
                     className="popup-book__main-image"
                     style={{ transform: `scale(${zoomLevel})` }}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
                   >
                     <div className="popup-book__plate-frame">
                       {/* Photo corners (antique album style) */}
@@ -317,6 +327,13 @@ export default function TactileSketchbookModal({
                     {/* Paper tabs holding the plate */}
                     <div className="popup-book__tab popup-book__tab--left" />
                     <div className="popup-book__tab popup-book__tab--right" />
+
+                    {!hasHoveredArtwork && popupReady && !showLoupe && (
+                      <div className="popup-book__cursor-cue">
+                        <span>Move your cursor here to feel the artwork</span>
+                        <span className="popup-book__cursor-arrow" aria-hidden="true" />
+                      </div>
+                    )}
                   </div>
 
                   {/* Pop-Up Curatorial Cutout Flaps */}

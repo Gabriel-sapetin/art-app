@@ -68,7 +68,7 @@ export const creators = {
 };
 
 export const instructorInfo = {
-  name: "Benidict Orejas",
+  name: "Benedict A. Orejas",
   title: "Course Instructor",
   department: "College of Arts and Sciences (CAS)",
   course: "Art Appreciation",
