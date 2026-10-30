@@ -13,10 +13,15 @@ import './App.css';
 
 const isCompactMobileView = () => {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  const userAgent = navigator.userAgent;
   const isNarrowViewport = window.matchMedia('(max-width: 760px)').matches;
-  const isMobileBrowser = navigator.userAgentData?.mobile
-    ?? /Android|iPhone|iPod|Mobile/i.test(navigator.userAgent);
-  return isNarrowViewport && isMobileBrowser;
+  const hasTouchInput = navigator.maxTouchPoints > 0;
+  const shortestScreenSide = Math.min(window.screen.width, window.screen.height);
+  const looksLikePhone = /iPhone|iPod|Android.*Mobile|Mobile/i.test(userAgent)
+    || (hasTouchInput && shortestScreenSide < 600);
+  const looksLikeTablet = /iPad/i.test(userAgent)
+    || (hasTouchInput && shortestScreenSide >= 600);
+  return looksLikePhone || (isNarrowViewport && !looksLikeTablet);
 };
 
 export default function App() {
@@ -80,16 +85,14 @@ export default function App() {
       <main className="desktop-view-notice" aria-labelledby="desktop-view-notice-title">
         <section className="desktop-view-notice__paper">
           <span className="desktop-view-notice__eyebrow">Ochre &amp; Ember · A Journey Through Western Art</span>
-          <h1 id="desktop-view-notice-title">Best experienced on a desktop</h1>
+          <h1 id="desktop-view-notice-title">Best on a computer or iPad</h1>
           <p>
-            This interactive art history journey is designed for a wider screen, where the book,
-            artwork spreads, and hands-on studies have room to unfold.
+            This interactive art history journey is designed for a laptop or desktop computer. If one
+            is not available, an iPad in landscape orientation is the recommended alternative.
           </p>
           <p>
-            For the intended layout, open this page on a computer or choose <strong>Desktop site</strong>
-            from your mobile browser menu. If this notice remains, continue after enabling that setting.
+            Please open the site on a laptop or desktop computer, or use an iPad in landscape orientation.
           </p>
-          <button type="button" onClick={() => setIsCompactViewport(false)}>Continue in desktop view</button>
         </section>
       </main>
     );
