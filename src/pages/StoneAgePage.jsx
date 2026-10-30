@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from '../hooks/useInView';
+import ShareArtworkModal from '../components/ShareArtworkModal';
 import paleolithicImage from '../../assets/paleolithic.jpg';
 import mesolithicImage from '../../assets/mesolithic.jpg';
 import neolithicImage from '../../assets/neolithic.png';
@@ -164,8 +165,9 @@ function CaveSurface({ marks, mode, onStart, onMove, onEnd, hasTool }) {
   );
 }
 
-export default function StoneAgePage() {
+export default function StoneAgePage({ onArtworkShared }) {
   const [headerRef, headerVisible] = useInView();
+  const [showShareModal, setShowShareModal] = useState(false);
   const [periodId, setPeriodId] = useState('paleolithic');
   const [materialId, setMaterialId] = useState('flint');
   const [progress, setProgress] = useState(0);
@@ -594,7 +596,31 @@ export default function StoneAgePage() {
               </section>
             ) : (
               <section className={`stone-age__wall-panel ${!hasTool ? 'is-step-locked' : ''}`} aria-labelledby="wall-title">
-                <div className="stone-age__panel-heading"><div><span className="stone-age__step-kicker">Step 2 · Make a mark</span><h3 id="wall-title">The cave wall</h3></div><button type="button" className="stone-age__clear" onClick={() => setMarks([])} disabled={!marks.length}>Clear marks</button></div>
+                <div className="stone-age__panel-heading">
+                  <div>
+                    <span className="stone-age__step-kicker">Step 2 · Make a mark</span>
+                    <h3 id="wall-title">The cave wall</h3>
+                  </div>
+                  <div className="stone-age__wall-actions">
+                    <button
+                      type="button"
+                      className="stone-age__share"
+                      onClick={() => setShowShareModal(true)}
+                      disabled={!marks.length}
+                      title={!marks.length ? 'Draw on the cave wall first to share' : 'Share your cave painting to the community'}
+                    >
+                      <span>Share to Community</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="stone-age__clear"
+                      onClick={() => setMarks([])}
+                      disabled={!marks.length}
+                    >
+                      Clear marks
+                    </button>
+                  </div>
+                </div>
                 <div className="stone-age__mark-tools" role="group" aria-label="Choose a mark-making technique">
                   <button type="button" className={mode === 'paint' ? 'active' : ''} aria-pressed={mode === 'paint'} disabled={!hasTool} onClick={() => setMode('paint')}><strong>Ochre pigment</strong><small>Paint a line</small></button>
                   <button type="button" className={mode === 'etch' ? 'active' : ''} aria-pressed={mode === 'etch'} disabled={!hasTool} onClick={() => setMode('etch')}><strong>{periodId === 'paleolithic' ? 'Pebble chopper' : 'Stone engraving'}</strong><small>Drag to scratch a line</small></button>
@@ -611,6 +637,15 @@ export default function StoneAgePage() {
           <div className="stone-age__field-note"><span className="plate-label">Field note</span><p>{hasTool ? period.made : periodId === 'paleolithic' ? material.detail : periodId === 'mesolithic' ? 'Microliths are small stone pieces that could be fitted into composite tools.' : 'Grinding uses abrasion to smooth and shape a stone edge.'} {periodId === 'neolithic' ? (woodChops === 3 ? 'You split the timber with the finished edge.' : 'Use the finished edge on the timber sample.') : marks.length ? `You have left ${marks.length} ${marks.length === 1 ? 'mark' : 'marks'} on the wall.` : 'The surface keeps a record of each gesture you make.'}</p></div>
         </div>
 
+        {/* Community Share Modal */}
+        <ShareArtworkModal
+          isOpen={showShareModal}
+          onClose={() => setShowShareModal(false)}
+          marks={marks}
+          periodId={periodId}
+          mode={mode}
+          onArtworkShared={onArtworkShared}
+        />
       </div>
     </section>
   );

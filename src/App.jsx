@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ExplorePage from './pages/ExplorePage';
 import StoneAgePage from './pages/StoneAgePage';
+import CommunityPage from './pages/CommunityPage';
 import ArtistsPage from './pages/ArtistsPage';
 import ArtStudioPage from './pages/ArtStudioPage';
 import ActivitiesPage from './pages/ActivitiesPage';
@@ -35,6 +36,7 @@ export default function App() {
     return false;
   });
   const [isOpening, setIsOpening] = useState(false);
+  const [latestSharedArtwork, setLatestSharedArtwork] = useState(null);
 
   useEffect(() => {
     const compactScreen = window.matchMedia('(max-width: 760px)');
@@ -120,7 +122,10 @@ export default function App() {
             <ExplorePage />
 
             {/* 3. Stone Age simulation */}
-            <StoneAgePage />
+            <StoneAgePage onArtworkShared={(artwork) => setLatestSharedArtwork(artwork)} />
+
+            {/* 3.5. Community Cave Wall Gallery */}
+            <CommunityPage newArtwork={latestSharedArtwork} />
 
             {/* 4. Artist Spotlight: Meet the Masters */}
             <ArtistsPage />
@@ -163,6 +168,7 @@ export default function App() {
                     <li><a href="#explore">Prehistoric Art & Cave Marks</a></li>
                     <li><a href="#explore">Stone Tools & Lithic Reduction</a></li>
                     <li><a href="#stone-age">Stone Age Making Simulation</a></li>
+                    <li><a href="#community">Community Cave Paintings</a></li>
                     <li><a href="#explore">Medieval Arts & Manuscripts</a></li>
                     <li><a href="#artists">Western Masters & Innovations</a></li>
                     <li><a href="#explore">Classical Greek Vessels & Paintings</a></li>
