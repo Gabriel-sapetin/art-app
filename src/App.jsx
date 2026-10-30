@@ -11,10 +11,16 @@ import TeamPage from './pages/TeamPage';
 import ReferencesPage from './pages/ReferencesPage';
 import './App.css';
 
+const isCompactMobileView = () => {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  const isNarrowViewport = window.matchMedia('(max-width: 760px)').matches;
+  const isMobileBrowser = navigator.userAgentData?.mobile
+    ?? /Android|iPhone|iPod|Mobile/i.test(navigator.userAgent);
+  return isNarrowViewport && isMobileBrowser;
+};
+
 export default function App() {
-  const [isCompactViewport, setIsCompactViewport] = useState(() => (
-    typeof window !== 'undefined' && window.matchMedia('(max-width: 760px)').matches
-  ));
+  const [isCompactViewport, setIsCompactViewport] = useState(isCompactMobileView);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [isBookOpen, setIsBookOpen] = useState(() => {
     // If user opens a direct section link like #explore, #artists, open directly
@@ -27,10 +33,14 @@ export default function App() {
 
   useEffect(() => {
     const compactScreen = window.matchMedia('(max-width: 760px)');
-    const updateViewport = (event) => setIsCompactViewport(event.matches);
-    setIsCompactViewport(compactScreen.matches);
+    const updateViewport = () => setIsCompactViewport(isCompactMobileView());
+    updateViewport();
     compactScreen.addEventListener('change', updateViewport);
-    return () => compactScreen.removeEventListener('change', updateViewport);
+    window.addEventListener('resize', updateViewport);
+    return () => {
+      compactScreen.removeEventListener('change', updateViewport);
+      window.removeEventListener('resize', updateViewport);
+    };
   }, []);
 
   useEffect(() => {
@@ -77,8 +87,9 @@ export default function App() {
           </p>
           <p>
             For the intended layout, open this page on a computer or choose <strong>Desktop site</strong>
-            from your mobile browser menu.
+            from your mobile browser menu. If this notice remains, continue after enabling that setting.
           </p>
+          <button type="button" onClick={() => setIsCompactViewport(false)}>Continue in desktop view</button>
         </section>
       </main>
     );
